@@ -1,7 +1,7 @@
 package shaharas;
 
 public class Expression {
-    private String expression;
+    private final String expression;
     Expression(String expression) {
         this.expression = expression;
     }
