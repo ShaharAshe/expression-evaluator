@@ -18,7 +18,7 @@ public class Controller {
         this.fileName = fileName;
     }
 
-    public void read() throws FileNotFoundException {
+    public void readInput() throws FileNotFoundException {
         try (BufferedReader reader = new BufferedReader(new java.io.FileReader((this.fileName)))) {
             String lineCont;
 

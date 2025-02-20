@@ -1,4 +1,4 @@
 package shaharas;
 
-public class AddOneLeft implements Operators{
+public class AddOneLeft{ // implements Operators{
 }

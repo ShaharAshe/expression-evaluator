@@ -8,7 +8,7 @@ public class Main {
         try {
             if(args.length<1) { throw new IllegalArgumentException("No file name provided."); }
             Controller controller = new Controller(args[0]);
-            controller.read();
+            controller.readInput();
         } catch (FileNotFoundException | IllegalArgumentException e) {
             System.err.println(e.getMessage());
         } catch (Exception e) {
