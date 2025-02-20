@@ -1,17 +1,19 @@
 package shaharas;
 
-import java.io.BufferedReader;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.ArrayList;
 
 
 public class Main {
     public static void main(String[] args) {
         try {
+            if(args.length<1) { throw new IllegalArgumentException("No file name provided."); }
             Controller controller = new Controller(args[0]);
-        } catch (FileNotFoundException FNFE) {
-            System.err.println(FNFE.getMessage());
+            controller.read();
+        } catch (FileNotFoundException | IllegalArgumentException e) {
+            System.err.println(e.getMessage());
+        } catch (Exception e) {
+            System.err.println("An error occurred.");
+            System.out.println(e.getMessage());
         }
     }
 }
