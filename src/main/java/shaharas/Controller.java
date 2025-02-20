@@ -31,4 +31,11 @@ public class Controller {
             throw new FileNotFoundException("Reading from file " + this.fileName + " failed.");
         }
     }
+
+    public void calculate(){
+        /* TODO: Implement the calculate method */
+        for (Expression expression : this.expressionsInput) {
+            expression.calculate();
+        }
+    }
 }

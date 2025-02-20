@@ -9,4 +9,6 @@ public class Expression {
     public void print() {
         System.out.println(this.expression);
     }
+
+    public void calculate() {/* TODO: Implement the calculate method */}
 }
