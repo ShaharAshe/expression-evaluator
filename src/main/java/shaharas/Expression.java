@@ -11,4 +11,12 @@ public class Expression {
     }
 
     public void calculate() {/* TODO: Implement the calculate method */}
+
+    public int size() {
+        return this.expression.length();
+    }
+
+    public String getExpressionByIndex(int index) {
+        return String.valueOf(this.expression.charAt(index));
+    }
 }

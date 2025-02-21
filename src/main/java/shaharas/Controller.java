@@ -8,12 +8,15 @@ import java.util.HashMap;
 
 public class Controller {
     private final String fileName;
-    private HashMap<String, Operators> operatorsFactory; /////
-    private final ArrayList<Expression> expressionsInput;
+    private HashMap<String, Operators> operatorsFactory; /* TODO: Implement the factory */
+    private final ArrayList<Expression> expressionsInput; // List of expressions read from the file/ console
+    private HashMap<String, VariableEXP> variables; // List of variables and their values
+    private int expressionIndex;
 
     Controller(String fileName) {
         this.expressionsInput = new ArrayList<>();
-        this.operatorsFactory = new HashMap<>(); /////
+        this.variables = new HashMap<>();
+        this.operatorsFactory = new HashMap<>(); /* TODO: Implement the factory */
 
         this.fileName = fileName;
     }
@@ -35,6 +38,23 @@ public class Controller {
     public void calculate(){
         /* TODO: Implement the calculate method */
         for (Expression expression : this.expressionsInput) {
+            this.expressionIndex = 0; // Reset the index for each expression
+
+            /* Save the variable from the expression */
+            String variable = expression.getExpressionByIndex(this.expressionIndex++);
+            this.expressionIndex++; // Skip the space
+
+            /* TODO: Search for the equal sign and skip it */
+
+            /* FIXME: Print the variable and the expression/ need to do the calculation */
+            /* -- */
+            System.out.println(variable + ": ");
+            for(int i = this.expressionIndex; i < expression.size(); i++) {
+                System.out.print(expression.getExpressionByIndex(i));
+            }
+            System.out.println("\n");
+            /* -- */
+
             expression.calculate();
         }
     }
