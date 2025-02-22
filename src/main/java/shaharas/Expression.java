@@ -37,7 +37,8 @@ public class Expression {
             int number = 0; // To store the number
             String op = ""; // To store the operator
 
-            while(op.isEmpty() && expressionIndex.get() < this.size()) {
+            while(op.isEmpty() && expressionIndex.get() < this.size()) { // need to run until we find an operator
+
                 /* ========= */
 
                 // Print every part of the expression in a new line
