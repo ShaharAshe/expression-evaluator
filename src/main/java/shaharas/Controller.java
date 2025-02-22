@@ -27,7 +27,7 @@ public class Controller {
             // Read each line from the file and create an Expression object
             while ((lineCont = reader.readLine()) != null) {
                 this.expressionsInput.add(new Expression(lineCont));
-                this.expressionsInput.get(expressionsInput.size() - 1).print();
+                this.expressionsInput.get(this.expressionsInput.size() - 1).print();
             }
         } catch (IOException e) {
             throw new FileNotFoundException("Reading from file " + this.fileName + " failed.");
@@ -37,7 +37,8 @@ public class Controller {
     public void calculate(){
         /* TODO: Implement the calculate method */
         for (Expression expression : this.expressionsInput) {
-            expression.calculate();
+            VariableEXP variable = expression.calculate(this.operatorsFactory);
+            this.variables.put(variable.getName(), variable);
         }
     }
 }

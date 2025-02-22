@@ -1,9 +1,19 @@
 package shaharas;
 
 public class Div implements Operators {
-    private final int a;
+    private int a;
+
+    public Div(){
+        this.a = 0;
+    }
     public Div(int a){
         this.a = a;
+    }
+
+    @Override
+    public Operators setA(int a){
+        this.a = a;
+        return this;
     }
 
     @Override
