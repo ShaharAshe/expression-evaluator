@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class OperatorsFactory { /* TODO: Implement the factory */
+public class OperatorsFactory {
     private final HashMap<Pattern, OperatorInfo> operators = new HashMap<>();
     private final HashMap<String, VariableEXP> variables;
 

@@ -1,7 +1,6 @@
 package shaharas;
 
 
-/* TODO: Check if this class is necessary */
 final class Utilities {
     private Utilities() {
         throw new IllegalStateException("Utility class");
@@ -12,7 +11,6 @@ final class Utilities {
     static final int MORE_2_PRIORITY = 2;
     static final int MORE_3_PRIORITY = 3;
     static final int HIGHEST_PRIORITY = 4;
-
 
     static final String PLUS = "+";
     static final String MINUS = "-";

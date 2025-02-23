@@ -10,7 +10,7 @@ public class Controller {
     private final String fileName;
     private final ArrayList<Expression> expressionsInput; // List of expressions read from the file/ console
     private HashMap<String, VariableEXP> variables; // List of variables and their values
-    OperatorsFactory operatorsFactory; /* TODO: Implement the factory */
+    OperatorsFactory operatorsFactory;
 
     public Controller(String fileName) {
         this.expressionsInput = new ArrayList<>();
