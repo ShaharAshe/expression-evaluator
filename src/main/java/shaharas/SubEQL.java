@@ -8,12 +8,17 @@ public class SubEQL implements Operators {
 
     public SubEQL(){
         this.a = 0;
-        this.priority = Utilities.POWER;
+        this.priority = Utilities.MORE_2_PRIORITY;
+        this.symbol = Utilities.MINUS_EQL;
+    }
+    public SubEQL(SubEQL a){
+        this.a = a.a;
+        this.priority = Utilities.MORE_2_PRIORITY;
         this.symbol = Utilities.MINUS_EQL;
     }
     public SubEQL(int a){
         this.a = a;
-        this.priority = Utilities.POWER;
+        this.priority = Utilities.MORE_2_PRIORITY;
         this.symbol = Utilities.MINUS_EQL;
     }
 
@@ -21,6 +26,11 @@ public class SubEQL implements Operators {
         return this.priority;
     }
 
+    @Override
+    public Operators clone(){
+        return new SubEQL(this);
+    }
+    
     @Override
     public Operators setA(int a){
         this.a = a;

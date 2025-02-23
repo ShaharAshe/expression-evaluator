@@ -8,17 +8,27 @@ public class AddEQL implements Operators {
 
     public AddEQL(){
         this.a = 0;
-        this.priority = Utilities.POWER;
+        this.priority = Utilities.MORE_2_PRIORITY;
+        this.symbol = Utilities.PLUS_EQL;
+    }
+    public AddEQL(AddEQL a){
+        this.a = a.a;
+        this.priority = Utilities.MORE_2_PRIORITY;
         this.symbol = Utilities.PLUS_EQL;
     }
     public AddEQL(int a){
         this.a = a;
-        this.priority = Utilities.POWER;
+        this.priority = Utilities.MORE_2_PRIORITY;
         this.symbol = Utilities.PLUS_EQL;
     }
 
     public int getPriority(){
         return this.priority;
+    }
+
+    @Override
+    public Operators clone(){
+        return new AddEQL(this);
     }
 
     @Override

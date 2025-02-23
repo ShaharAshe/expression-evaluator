@@ -26,6 +26,8 @@ public class Controller {
             // Read each line from the file and create an Expression object
             while ((lineCont = reader.readLine()) != null) {
                 this.expressionsInput.add(new Expression(lineCont));
+
+                /* if you want to print each expression */
                 // this.expressionsInput.get(this.expressionsInput.size() - 1).print();
             }
         } catch (IOException e) {
@@ -34,7 +36,6 @@ public class Controller {
     }
 
     public void calculate(){
-        /* TODO: Implement the calculate method */
         for (Expression expression : this.expressionsInput) {
             /* The calculate method gets the variable and the factory */
             VariableEXP variable = expression.calculate(this.operatorsFactory, this.variables);

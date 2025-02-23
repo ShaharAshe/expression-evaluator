@@ -8,17 +8,27 @@ public class MulEQL implements Operators {
 
     public MulEQL(){
         this.a = 0;
-        this.priority = Utilities.POWER;
+        this.priority = Utilities.MORE_2_PRIORITY;
+        this.symbol = Utilities.MULTIPLY_EQL;
+    }
+    public MulEQL(MulEQL a){
+        this.a = a.a;
+        this.priority = Utilities.MORE_2_PRIORITY;
         this.symbol = Utilities.MULTIPLY_EQL;
     }
     public MulEQL(int a){
         this.a = a;
-        this.priority = Utilities.POWER;
+        this.priority = Utilities.MORE_2_PRIORITY;
         this.symbol = Utilities.MULTIPLY_EQL;
     }
 
     public int getPriority(){
         return this.priority;
+    }
+
+    @Override
+    public Operators clone(){
+        return new MulEQL(this);
     }
 
     @Override

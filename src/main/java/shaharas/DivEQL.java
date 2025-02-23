@@ -8,12 +8,17 @@ public class DivEQL implements Operators {
 
     public DivEQL(){
         this.a = 0;
-        this.priority = Utilities.POWER;
+        this.priority = Utilities.MORE_2_PRIORITY;
+        this.symbol = Utilities.DIVIDE_EQL;
+    }
+    public DivEQL(DivEQL a){
+        this.a = a.a;
+        this.priority = Utilities.MORE_2_PRIORITY;
         this.symbol = Utilities.DIVIDE_EQL;
     }
     public DivEQL(int a){
         this.a = a;
-        this.priority = Utilities.POWER;
+        this.priority = Utilities.MORE_2_PRIORITY;
         this.symbol = Utilities.DIVIDE_EQL;
     }
 
@@ -21,6 +26,10 @@ public class DivEQL implements Operators {
         return this.priority;
     }
 
+    @Override
+    public Operators clone(){
+        return new DivEQL(this);
+    }
     @Override
     public Operators setA(int a){
         this.a = a;

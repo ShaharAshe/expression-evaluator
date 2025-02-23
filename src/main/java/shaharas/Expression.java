@@ -29,10 +29,6 @@ public class Expression {
 
         this.variable = new VariableEXP(currentSTR);
 
-        /* Now its skipping the equal sign / TODO: There is more to do here - like: skipping the addEqual sign */
-        loopExpressionUntilSpace(currentSTR, expressionIndex);
-        expressionIndex.set(expressionIndex.get() + 1); // Skip the space
-
         result = calculate(expressionIndex, currentSTR, variables, operatorsFactory);
         while (!this.CalculationStack.isEmpty()) {
             result = this.CalculationStack.pop().calculate(result);
@@ -41,16 +37,27 @@ public class Expression {
 
         return this.variable;
     }
+
     private int calculate(AtomicInteger expressionIndex, StringBuilder currentSTR, HashMap<String, VariableEXP> variables, OperatorsFactory operatorsFactory) {
+        AtomicInteger number = new AtomicInteger(0); // To store the number
+        AtomicBoolean isDigitOrVariable = new AtomicBoolean(false); // To save if the currentSTR is a digit or not
+
+        try {
+            number.set(variables.get(this.variable.getName()).getValue());
+            isDigitOrVariable.set(true);
+        } catch (NullPointerException e) {
+            number.set(0);
+            loopExpressionUntilSpace(currentSTR, expressionIndex);
+            expressionIndex.set(expressionIndex.get() + 1); // Skip the space
+        }
+
         for(; expressionIndex.get() < this.size(); expressionIndex.set(expressionIndex.get() + 1)) {
-            AtomicInteger number = new AtomicInteger(0); // To store the number
             String op = ""; // To store the operator
-            AtomicBoolean isDigitOrVariable = new AtomicBoolean(false); // To save if the currentSTR is a digit or not
 
             // need to run until we find an operator that is not with priority
             while(op.isEmpty() && expressionIndex.get() < this.size()) {
                 // Print every part of the expression in a new line
-                loopExpressionUntilSpace(currentSTR, expressionIndex);
+                this.loopExpressionUntilSpace(currentSTR, expressionIndex);
 
                 /* -- Check if the currentSTR is a digit or a variable / if not - it is an operator -- */
                 if(this.isDigitOrVariableCheck(currentSTR, variables, number, isDigitOrVariable)) {
@@ -67,12 +74,16 @@ public class Expression {
                     if (info != null) {
                         this.CalculationStack.push(info.creator.setA(number.get()));
 
-                        if (info.priority == Utilities.POWER) {
+                        /* -- Check if the operator has priority */
+                        if (info.priority != Utilities.REGULAR_PRIORITY && info.priority != Utilities.NONE_PRIORITY) {
                             expressionIndex.set(expressionIndex.get() + 1); // Skip the space
-                            loopExpressionUntilSpace(currentSTR, expressionIndex);
+                            this.loopExpressionUntilSpace(currentSTR, expressionIndex);
+                            expressionIndex.set(expressionIndex.get() + 1); // Skip the space
                             this.isDigitOrVariableCheck(currentSTR, variables, number, isDigitOrVariable);
                             number.set(this.CalculationStack.pop().calculate(Integer.parseInt(currentSTR.toString())));
                             op = "";
+                        } else {
+                            number.set(0);
                         }
                     } else {
                         throw new IllegalArgumentException("Invalid operator.");

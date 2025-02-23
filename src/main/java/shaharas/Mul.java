@@ -7,17 +7,27 @@ public class Mul implements Operators {
 
     public Mul(){
         this.a = 0;
-        this.priority = Utilities.POWER;
+        this.priority = Utilities.MORE_1_PRIORITY;
+        this.symbol = Utilities.MULTIPLY;
+    }
+    public Mul(Mul a){
+        this.a = a.a;
+        this.priority = Utilities.MORE_1_PRIORITY;
         this.symbol = Utilities.MULTIPLY;
     }
     public Mul(int a){
         this.a = a;
-        this.priority = Utilities.POWER;
+        this.priority = Utilities.MORE_1_PRIORITY;
         this.symbol = Utilities.MULTIPLY;
     }
 
     public int getPriority(){
         return this.priority;
+    }
+
+    @Override
+    public Operators clone(){
+        return new Mul(this);
     }
 
     @Override

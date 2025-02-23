@@ -7,17 +7,27 @@ public class Div implements Operators {
 
     public Div(){
         this.a = 0;
-        this.priority = Utilities.POWER;
+        this.priority = Utilities.MORE_1_PRIORITY;
+        this.symbol = Utilities.DIVIDE;
+    }
+    public Div(Div a){
+        this.a = a.a;
+        this.priority = Utilities.MORE_1_PRIORITY;
         this.symbol = Utilities.DIVIDE;
     }
     public Div(int a){
         this.a = a;
-        this.priority = Utilities.POWER;
+        this.priority = Utilities.MORE_1_PRIORITY;
         this.symbol = Utilities.DIVIDE;
     }
 
     public int getPriority(){
         return this.priority;
+    }
+
+    @Override
+    public Operators clone(){
+        return new Div(this);
     }
 
     @Override

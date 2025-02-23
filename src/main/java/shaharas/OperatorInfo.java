@@ -9,6 +9,13 @@ public class OperatorInfo {
     final Operators creator;
     final int operandCount;
 
+    public OperatorInfo(OperatorInfo info) {
+        this.pattern = info.pattern;
+        this.symbol = info.symbol;
+        this.priority = info.priority;
+        this.creator = info.creator.clone();
+        this.operandCount = info.operandCount;
+    }
     OperatorInfo(Pattern pattern, String symbol, int priority, Operators creator, int operandCount) {
         this.pattern = pattern;
         this.priority = priority;

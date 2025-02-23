@@ -13,15 +13,17 @@ public class OperatorsFactory { /* TODO: Implement the factory */
     }
 
     private void registerOperators() {
-        registerOperator(PatternsUtils.PLUS,Utilities.PLUS,Utilities.REGULAR,new Add(),1); // +
-        registerOperator(PatternsUtils.MINUS,Utilities.MINUS,Utilities.REGULAR,new Sub(),1); // -
-        registerOperator(PatternsUtils.MULTIPLY,Utilities.MULTIPLY,Utilities.POWER,new Mul(),1); // *
-        registerOperator(PatternsUtils.DIVIDE,Utilities.DIVIDE,Utilities.POWER,new Div(),1); // /
+        registerOperator(PatternsUtils.PLUS,Utilities.PLUS,Utilities.REGULAR_PRIORITY,new Add(),1); // +
+        registerOperator(PatternsUtils.MINUS,Utilities.MINUS,Utilities.REGULAR_PRIORITY,new Sub(),1); // -
+        registerOperator(PatternsUtils.MULTIPLY,Utilities.MULTIPLY,Utilities.MORE_1_PRIORITY,new Mul(),1); // *
+        registerOperator(PatternsUtils.DIVIDE,Utilities.DIVIDE,Utilities.MORE_1_PRIORITY,new Div(),1); // /
 
-//        registerOperator(PatternsUtils.PLUS_EQL,Utilities.PLUS_EQL,Utilities.REGULAR,new Add()); // +=
-//        registerOperator(PatternsUtils.MINUS_EQL,Utilities.MINUS_EQL,Utilities.REGULAR,new Sub()); // -=
-//        registerOperator(PatternsUtils.MULTIPLY_EQL,Utilities.MULTIPLY_EQL,Utilities.POWER,new Mul()); // *=
-//        registerOperator(PatternsUtils.DIVIDE_EQL,Utilities.DIVIDE_EQL,Utilities.POWER,new Div()); // /=
+        registerOperator(PatternsUtils.EQL,Utilities.EQUALS,Utilities.NONE_PRIORITY,null,0); // =
+
+        registerOperator(PatternsUtils.PLUS_EQL,Utilities.PLUS_EQL,Utilities.MORE_2_PRIORITY,new Add(),1); // +=
+        registerOperator(PatternsUtils.MINUS_EQL,Utilities.MINUS_EQL,Utilities.MORE_2_PRIORITY,new Sub(),1); // -=
+        registerOperator(PatternsUtils.MULTIPLY_EQL,Utilities.MULTIPLY_EQL,Utilities.MORE_2_PRIORITY,new Mul(),1); // *=
+        registerOperator(PatternsUtils.DIVIDE_EQL,Utilities.DIVIDE_EQL,Utilities.MORE_2_PRIORITY,new Div(),1); // /=
 
 //        registerOperator(PatternsUtils.POST_INCREMENT,Utilities.INCREMENT,Utilities.POWER, new AddOneRight(),0); // ++
 //        registerOperator(PatternsUtils.PRE_INCREMENT,Utilities.DECREMENT,Utilities.POWER, new SubOneRight(),0); // --
@@ -35,7 +37,7 @@ public class OperatorsFactory { /* TODO: Implement the factory */
         for (HashMap.Entry<Pattern, OperatorInfo> entry : this.operators.entrySet()) {
             Matcher matcher = entry.getKey().matcher(expression);
             if (matcher.find()) {
-                return entry.getValue();
+                return new OperatorInfo(entry.getValue());
             }
         }
         return null;

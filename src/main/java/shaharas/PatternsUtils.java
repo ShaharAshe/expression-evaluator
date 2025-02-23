@@ -9,18 +9,20 @@ final class PatternsUtils {
     static final String MINUS = "-"; // -
     static final String MULTIPLY = "\\*"; // *
     static final String DIVIDE = "/"; // /
-    static final String POWER = "\\^"; // ^
+//    static final String POWER = "\\^"; // ^
 
     // Increment/Decrement
-    static final String PRE_INCREMENT = "\\+\\+(?=\\w+)"; // ++i
-    static final String POST_INCREMENT = "(?<=\\w+)\\+\\+"; // i++
+//    static final String PRE_INCREMENT = "\\+\\+(?=\\w+)"; // ++i
+//    static final String POST_INCREMENT = "(?<=\\w+)\\+\\+"; // i++
 //    static final String PRE_DECREMENT = "--(?=\\w+)";
 //    static final String POST_DECREMENT = "(?<=\\w+)--";
 
     // Assignment operators
-//    static final String ASSIGN = "=";
-//    static final String PLUS_ASSIGN = "\\+=";
-//    static final String MINUS_ASSIGN = "-=";
+    static final String EQL = "=";
+    static final String PLUS_EQL = "\\+=";
+    static final String MINUS_EQL = "-=";
+    static final String MULTIPLY_EQL = "\\*=";
+    static final String DIVIDE_EQL = "/=";
 
     // Variables and numbers
     static final String VARIABLE = "[a-zA-Z_][a-zA-Z0-9_]*"; // Pattern for variable names (the first character must be a letter or an underscore)

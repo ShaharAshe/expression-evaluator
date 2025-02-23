@@ -7,17 +7,27 @@ public class Sub implements Operators {
 
     public Sub(){
         this.a = 0;
-        this.priority = Utilities.REGULAR;
+        this.priority = Utilities.REGULAR_PRIORITY;
+        this.symbol = Utilities.MINUS;
+    }
+    public Sub(Sub a){
+        this.a = a.a;
+        this.priority = Utilities.REGULAR_PRIORITY;
         this.symbol = Utilities.MINUS;
     }
     public Sub(int a){
         this.a = a;
-        this.priority = Utilities.REGULAR;
+        this.priority = Utilities.REGULAR_PRIORITY;
         this.symbol = Utilities.MINUS;
     }
 
     public int getPriority(){
         return this.priority;
+    }
+
+    @Override
+    public Operators clone(){
+        return new Sub(this);
     }
 
     @Override
