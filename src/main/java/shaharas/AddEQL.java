@@ -3,12 +3,22 @@ package shaharas;
 // new AddEQL(i).calculate(1) -> i += 1
 public class AddEQL implements Operators {
     private int a;
+    private final int priority;
+    private final String symbol;
 
     public AddEQL(){
         this.a = 0;
+        this.priority = Utilities.POWER;
+        this.symbol = Utilities.PLUS_EQL;
     }
     public AddEQL(int a){
         this.a = a;
+        this.priority = Utilities.POWER;
+        this.symbol = Utilities.PLUS_EQL;
+    }
+
+    public int getPriority(){
+        return this.priority;
     }
 
     @Override
@@ -18,7 +28,8 @@ public class AddEQL implements Operators {
     }
 
     @Override
-    public int calculate(int b){
+    public int calculate(int... args){
+        int b = args[0];
         return new Add(this.a).calculate(b);
     }
 }

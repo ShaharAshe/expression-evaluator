@@ -2,12 +2,22 @@ package shaharas;
 
 public class Div implements Operators {
     private int a;
+    private final int priority;
+    private final String symbol;
 
     public Div(){
         this.a = 0;
+        this.priority = Utilities.POWER;
+        this.symbol = Utilities.DIVIDE;
     }
     public Div(int a){
         this.a = a;
+        this.priority = Utilities.POWER;
+        this.symbol = Utilities.DIVIDE;
+    }
+
+    public int getPriority(){
+        return this.priority;
     }
 
     @Override
@@ -17,7 +27,8 @@ public class Div implements Operators {
     }
 
     @Override
-    public int calculate(int b){
+    public int calculate(int... args){
+        int b = args[0];
         if(b == 0) { throw new IllegalArgumentException("Cannot divide by zero."); }
         return this.a / b;
     }

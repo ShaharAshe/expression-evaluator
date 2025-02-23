@@ -1,3 +1,3 @@
 package shaharas;
 
-public class SubOneLeft{ /* TODO: implements Operators */ }
+//public class SubOneLeft implements BinaryOperator { /* TODO: implements Operators */ }

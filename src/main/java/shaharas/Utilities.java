@@ -2,18 +2,29 @@ package shaharas;
 
 
 /* TODO: Check if this class is necessary */
-public final class Utilities {
-    private static Utilities instance;
-    public int startExpressionIndex;
-
+final class Utilities {
     private Utilities() {
-        this.startExpressionIndex = 0;
+        throw new IllegalStateException("Utility class");
     }
+    static final int REGULAR = 0;
+    static final int POWER = 1;
 
-    public static Utilities getInstance(String value) {
-        if (instance == null) {
-            instance = new Utilities();
-        }
-        return instance;
-    }
+    static final String PLUS = "+";
+    static final String MINUS = "-";
+    static final String MULTIPLY = "*";
+    static final String DIVIDE = "/";
+
+    static final String PLUS_EQL = "+=";
+    static final String MINUS_EQL = "-=";
+    static final String MULTIPLY_EQL = "*=";
+    static final String DIVIDE_EQL = "/=";
+
+    static final String MUL = "^";
+
+    static final String INCREMENT = "++";
+    static final String DECREMENT = "--";
+
+    static final String OPEN_PARENTHESIS = "(";
+    static final String CLOSE_PARENTHESIS = ")";
+
 }
