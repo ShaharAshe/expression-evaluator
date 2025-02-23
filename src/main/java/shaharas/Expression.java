@@ -27,27 +27,21 @@ public class Expression {
         expressionIndex.set(expressionIndex.get() + 1); // Skip the space
 
         this.variable = new VariableEXP(currentSTR);
-        System.out.println("\nVariable Name: " + this.variable.getName());
 
         /* Now its skipping the equal sign / TODO: There is more to do here - like: skipping the addEqual sign */
         loopExpressionUntilSpace(currentSTR, expressionIndex);
         expressionIndex.set(expressionIndex.get() + 1); // Skip the space
 
-        /* FIXME: Implement the calculation - look for good design for this */
         /* -- */
         for(; expressionIndex.get() < this.size(); expressionIndex.set(expressionIndex.get() + 1)) {
             int number = 0; // To store the number
             String op = ""; // To store the operator
             boolean isDigitOrVariable = false; // To save if the currentSTR is a digit or not
 
-            while(op.isEmpty() && expressionIndex.get() < this.size()) { // need to run until we find an operator
-
-                /* ========= */
-
+            // need to run until we find an operator that is not with priority
+            while(op.isEmpty() && expressionIndex.get() < this.size()) {
                 // Print every part of the expression in a new line
                 loopExpressionUntilSpace(currentSTR, expressionIndex);
-
-                System.out.print(currentSTR);
 
                 /* -- Check if the currentSTR is a digit or a variable / if not - it is an operator -- */
                 if(Pattern.matches(PatternsUtils.NUMBER, currentSTR)) {
@@ -68,8 +62,28 @@ public class Expression {
                 /* -- */
 
                 if (!op.isEmpty()) {
-                    this.CalculationStack.push(operatorsFactory.findOperator(op).creator.setA(number));
-                } else if (this.size() <= expressionIndex.get()) {
+                    OperatorInfo info = operatorsFactory.findOperator(op);
+                    if (info != null) {
+                        this.CalculationStack.push(info.creator.setA(number));
+
+                        if (info.priority == Utilities.POWER) {
+                            expressionIndex.set(expressionIndex.get() + 1); // Skip the space
+                            loopExpressionUntilSpace(currentSTR, expressionIndex);
+                            if(Pattern.matches(PatternsUtils.NUMBER, currentSTR)) {
+                                number = Integer.parseInt(currentSTR.toString());
+                                expressionIndex.set(expressionIndex.get() + 1); // Skip the space
+                            } else if(Pattern.matches(PatternsUtils.VARIABLE, currentSTR)) {
+                                number = variables.get(currentSTR.toString()).getValue();
+                                expressionIndex.set(expressionIndex.get() + 1); // Skip the space
+                            }
+                            number = this.CalculationStack.pop().calculate(Integer.parseInt(currentSTR.toString()));
+                            op = "";
+                        }
+                    } else {
+                        throw new IllegalArgumentException("Invalid operator.");
+                    }
+                }
+                if (op.isEmpty() && this.size() <= expressionIndex.get()) {
                     result = number;
                 }
 
