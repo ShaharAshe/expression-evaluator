@@ -16,7 +16,7 @@ public class Controller {
         this.expressionsInput = new ArrayList<>();
         this.variables = new HashMap<>();
         this.fileName = fileName;
-        this.operatorsFactory = new OperatorsFactory(); /* TODO: Implement the factory */
+        this.operatorsFactory = new OperatorsFactory(this.variables);
     }
 
     public void readInput() throws FileNotFoundException {

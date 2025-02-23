@@ -1,29 +1,15 @@
 package shaharas;
 
 // new AddEQL(i).calculate(1) -> i += 1
-public class AddEQL implements Operators {
-    private int a;
-    private final int priority;
-    private final String symbol;
-
+public class AddEQL extends BaseOperators {
     public AddEQL(){
-        this.a = 0;
-        this.priority = Utilities.MORE_2_PRIORITY;
-        this.symbol = Utilities.PLUS_EQL;
+        super(0, Utilities.MORE_2_PRIORITY, Utilities.PLUS_EQL);
     }
     public AddEQL(AddEQL a){
-        this.a = a.a;
-        this.priority = Utilities.MORE_2_PRIORITY;
-        this.symbol = Utilities.PLUS_EQL;
+        super(a);
     }
     public AddEQL(int a){
-        this.a = a;
-        this.priority = Utilities.MORE_2_PRIORITY;
-        this.symbol = Utilities.PLUS_EQL;
-    }
-
-    public int getPriority(){
-        return this.priority;
+        super(a, Utilities.MORE_2_PRIORITY, Utilities.PLUS_EQL);
     }
 
     @Override
@@ -33,13 +19,13 @@ public class AddEQL implements Operators {
 
     @Override
     public Operators setA(int a){
-        this.a = a;
+        super.setA(a);
         return this;
     }
 
     @Override
-    public int calculate(int... args){
+    public int calculate(String variable, int... args){
         int b = args[0];
-        return new Add(this.a).calculate(b);
+        return new Add(super.getA()).calculate(variable, b);
     }
 }

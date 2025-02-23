@@ -1,29 +1,15 @@
 package shaharas;
 
 // new SubEQL(1).calculate(2) -> 1 -= 2
-public class SubEQL implements Operators {
-    private int a;
-    private final int priority;
-    private final String symbol;
-
+public class SubEQL extends BaseOperators {
     public SubEQL(){
-        this.a = 0;
-        this.priority = Utilities.MORE_2_PRIORITY;
-        this.symbol = Utilities.MINUS_EQL;
+        super(0, Utilities.MORE_2_PRIORITY, Utilities.MINUS_EQL);
     }
     public SubEQL(SubEQL a){
-        this.a = a.a;
-        this.priority = Utilities.MORE_2_PRIORITY;
-        this.symbol = Utilities.MINUS_EQL;
+        super(a);
     }
     public SubEQL(int a){
-        this.a = a;
-        this.priority = Utilities.MORE_2_PRIORITY;
-        this.symbol = Utilities.MINUS_EQL;
-    }
-
-    public int getPriority(){
-        return this.priority;
+        super(a, Utilities.MORE_2_PRIORITY, Utilities.MINUS_EQL);
     }
 
     @Override
@@ -33,13 +19,13 @@ public class SubEQL implements Operators {
     
     @Override
     public Operators setA(int a){
-        this.a = a;
+        super.setA(a);
         return this;
     }
 
     @Override
-    public int calculate(int... args){
+    public int calculate(String variable, int... args){
         int b = args[0];
-        return new Div(this.a).calculate(b);
+        return new Div(super.getA()).calculate(variable, b);
     }
 }

@@ -1,28 +1,14 @@
 package shaharas;
 
-public class Sub implements Operators {
-    private int a;
-    private final int priority;
-    private final String symbol;
-
+public class Sub extends BaseOperators {
     public Sub(){
-        this.a = 0;
-        this.priority = Utilities.REGULAR_PRIORITY;
-        this.symbol = Utilities.MINUS;
+        super(0, Utilities.REGULAR_PRIORITY, Utilities.MINUS);
     }
     public Sub(Sub a){
-        this.a = a.a;
-        this.priority = Utilities.REGULAR_PRIORITY;
-        this.symbol = Utilities.MINUS;
+        super(a);
     }
     public Sub(int a){
-        this.a = a;
-        this.priority = Utilities.REGULAR_PRIORITY;
-        this.symbol = Utilities.MINUS;
-    }
-
-    public int getPriority(){
-        return this.priority;
+        super(a, Utilities.REGULAR_PRIORITY, Utilities.MINUS);
     }
 
     @Override
@@ -32,13 +18,13 @@ public class Sub implements Operators {
 
     @Override
     public Operators setA(int a){
-        this.a = a;
+        super.setA(a);
         return this;
     }
 
     @Override
-    public int calculate(int... args){
+    public int calculate(String variable, int... args){
         int b = args[0];
-        return this.a - b;
+        return super.getA() - b;
     }
 }

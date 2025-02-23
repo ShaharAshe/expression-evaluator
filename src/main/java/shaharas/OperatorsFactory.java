@@ -7,8 +7,10 @@ import java.util.regex.Pattern;
 
 public class OperatorsFactory { /* TODO: Implement the factory */
     private final HashMap<Pattern, OperatorInfo> operators = new HashMap<>();
+    private final HashMap<String, VariableEXP> variables;
 
-    public OperatorsFactory() {
+    public OperatorsFactory(HashMap<String, VariableEXP> variable) {
+        this.variables = variable;
         registerOperators();
     }
 
@@ -25,8 +27,8 @@ public class OperatorsFactory { /* TODO: Implement the factory */
         registerOperator(PatternsUtils.MULTIPLY_EQL,Utilities.MULTIPLY_EQL,Utilities.MORE_2_PRIORITY,new Mul(),1); // *=
         registerOperator(PatternsUtils.DIVIDE_EQL,Utilities.DIVIDE_EQL,Utilities.MORE_2_PRIORITY,new Div(),1); // /=
 
-//        registerOperator(PatternsUtils.POST_INCREMENT,Utilities.INCREMENT,Utilities.POWER, new AddOneRight(),0); // ++
-//        registerOperator(PatternsUtils.PRE_INCREMENT,Utilities.DECREMENT,Utilities.POWER, new SubOneRight(),0); // --
+//        registerOperator(PatternsUtils.PRE_INCREMENT,Utilities.INCREMENT,Utilities.MORE_3_PRIORITY,new AddOneLeft(this.variables),0); // ++i
+//        registerOperator(PatternsUtils.POST_INCREMENT,Utilities.INCREMENT,Utilities.MORE_3_PRIORITY,new AddOneRight(this.variables),0); // i++
     }
     private void registerOperator(String regex, String symbol, int precedence, Operators creator, int operandCount) {
         Pattern pattern = Pattern.compile(regex);
@@ -43,10 +45,10 @@ public class OperatorsFactory { /* TODO: Implement the factory */
         return null;
     }
 
-    public int createOperator(OperatorInfo info, List<Integer> operands) {
+    public int createOperator(String variable, OperatorInfo info, List<Integer> operands) {
         if (operands.size() != info.operandCount) {
             throw new IllegalArgumentException("Expected " + info.operandCount + " operands, got " + operands.size());
         }
-        return info.creator.calculate(operands.stream().mapToInt(i -> i).toArray());
+        return info.creator.calculate(variable, operands.stream().mapToInt(i -> i).toArray());
     }
 }

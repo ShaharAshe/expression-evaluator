@@ -1,29 +1,15 @@
 package shaharas;
 
 // new MulEQL(2).calculate(3) -> 2 *= 3
-public class MulEQL implements Operators {
-    private int a;
-    private final int priority;
-    private final String symbol;
-
+public class MulEQL extends BaseOperators {
     public MulEQL(){
-        this.a = 0;
-        this.priority = Utilities.MORE_2_PRIORITY;
-        this.symbol = Utilities.MULTIPLY_EQL;
+        super(0, Utilities.MORE_2_PRIORITY, Utilities.MULTIPLY_EQL);
     }
     public MulEQL(MulEQL a){
-        this.a = a.a;
-        this.priority = Utilities.MORE_2_PRIORITY;
-        this.symbol = Utilities.MULTIPLY_EQL;
+        super(a);
     }
     public MulEQL(int a){
-        this.a = a;
-        this.priority = Utilities.MORE_2_PRIORITY;
-        this.symbol = Utilities.MULTIPLY_EQL;
-    }
-
-    public int getPriority(){
-        return this.priority;
+        super(a, Utilities.MORE_2_PRIORITY, Utilities.MULTIPLY_EQL);
     }
 
     @Override
@@ -33,13 +19,13 @@ public class MulEQL implements Operators {
 
     @Override
     public Operators setA(int a){
-        this.a = a;
+        super.setA(a);
         return this;
     }
 
     @Override
-    public int calculate(int... args){
+    public int calculate(String variable, int... args){
         int b = args[0];
-        return new Mul(this.a).calculate(b);
+        return new Mul(super.getA()).calculate(variable, b);
     }
 }

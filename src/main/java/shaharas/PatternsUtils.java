@@ -12,8 +12,8 @@ final class PatternsUtils {
 //    static final String POWER = "\\^"; // ^
 
     // Increment/Decrement
-//    static final String PRE_INCREMENT = "\\+\\+(?=\\w+)"; // ++i
-//    static final String POST_INCREMENT = "(?<=\\w+)\\+\\+"; // i++
+    static final String PRE_INCREMENT = "\\+\\+(?=\\w+)"; // ++i
+    static final String POST_INCREMENT = "(?<=\\w+)\\+\\+"; // i++
 //    static final String PRE_DECREMENT = "--(?=\\w+)";
 //    static final String POST_DECREMENT = "(?<=\\w+)--";
 

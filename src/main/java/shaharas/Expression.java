@@ -31,7 +31,7 @@ public class Expression {
 
         result = calculate(expressionIndex, currentSTR, variables, operatorsFactory);
         while (!this.CalculationStack.isEmpty()) {
-            result = this.CalculationStack.pop().calculate(result);
+            result = this.CalculationStack.pop().calculate("",result);
         }
         this.variable.setValue(result);
 
@@ -80,7 +80,7 @@ public class Expression {
                             this.loopExpressionUntilSpace(currentSTR, expressionIndex);
                             expressionIndex.set(expressionIndex.get() + 1); // Skip the space
                             this.isDigitOrVariableCheck(currentSTR, variables, number, isDigitOrVariable);
-                            number.set(this.CalculationStack.pop().calculate(Integer.parseInt(currentSTR.toString())));
+                            number.set(this.CalculationStack.pop().calculate("",Integer.parseInt(currentSTR.toString())));
                             op = "";
                         } else {
                             number.set(0);

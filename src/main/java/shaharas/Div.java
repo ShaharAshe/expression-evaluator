@@ -1,28 +1,14 @@
 package shaharas;
 
-public class Div implements Operators {
-    private int a;
-    private final int priority;
-    private final String symbol;
-
+public class Div extends BaseOperators {
     public Div(){
-        this.a = 0;
-        this.priority = Utilities.MORE_1_PRIORITY;
-        this.symbol = Utilities.DIVIDE;
+        super(0, Utilities.MORE_1_PRIORITY, Utilities.DIVIDE);
     }
     public Div(Div a){
-        this.a = a.a;
-        this.priority = Utilities.MORE_1_PRIORITY;
-        this.symbol = Utilities.DIVIDE;
+        super(a);
     }
     public Div(int a){
-        this.a = a;
-        this.priority = Utilities.MORE_1_PRIORITY;
-        this.symbol = Utilities.DIVIDE;
-    }
-
-    public int getPriority(){
-        return this.priority;
+        super(a, Utilities.MORE_1_PRIORITY, Utilities.DIVIDE);
     }
 
     @Override
@@ -32,14 +18,14 @@ public class Div implements Operators {
 
     @Override
     public Operators setA(int a){
-        this.a = a;
+        super.setA(a);
         return this;
     }
 
     @Override
-    public int calculate(int... args){
+    public int calculate(String variable, int... args){
         int b = args[0];
         if(b == 0) { throw new IllegalArgumentException("Cannot divide by zero."); }
-        return this.a / b;
+        return super.getA() / b;
     }
 }

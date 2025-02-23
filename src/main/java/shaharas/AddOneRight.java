@@ -1,3 +1,5 @@
 package shaharas;
 
-//public class AddOneRight implements BinaryOperator{ /* TODO: implements Operators */ }
+import java.util.HashMap;
+
+//public class AddOneRight extends BaseOperators { /* TODO: implements Operators */ }

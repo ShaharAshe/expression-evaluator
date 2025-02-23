@@ -1,28 +1,14 @@
 package shaharas;
 
-public class Mul implements Operators {
-    private int a;
-    private final int priority;
-    private final String symbol;
-
+public class Mul extends BaseOperators {
     public Mul(){
-        this.a = 0;
-        this.priority = Utilities.MORE_1_PRIORITY;
-        this.symbol = Utilities.MULTIPLY;
+        super(0, Utilities.MORE_1_PRIORITY, Utilities.MULTIPLY);
     }
     public Mul(Mul a){
-        this.a = a.a;
-        this.priority = Utilities.MORE_1_PRIORITY;
-        this.symbol = Utilities.MULTIPLY;
+        super(a);
     }
     public Mul(int a){
-        this.a = a;
-        this.priority = Utilities.MORE_1_PRIORITY;
-        this.symbol = Utilities.MULTIPLY;
-    }
-
-    public int getPriority(){
-        return this.priority;
+        super(a, Utilities.MORE_1_PRIORITY, Utilities.MULTIPLY);
     }
 
     @Override
@@ -32,13 +18,13 @@ public class Mul implements Operators {
 
     @Override
     public Operators setA(int a){
-        this.a = a;
+        super.setA(a);
         return this;
     }
 
     @Override
-    public int calculate(int... args){
+    public int calculate(String variable, int... args){
         int b = args[0];
-        return this.a * b;
+        return super.getA() * b;
     }
 }
