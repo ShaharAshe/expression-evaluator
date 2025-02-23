@@ -3,6 +3,7 @@ package shaharas;
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.Stack;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Pattern;
 
@@ -32,11 +33,19 @@ public class Expression {
         loopExpressionUntilSpace(currentSTR, expressionIndex);
         expressionIndex.set(expressionIndex.get() + 1); // Skip the space
 
-        /* -- */
+        result = calculate(expressionIndex, currentSTR, variables, operatorsFactory);
+        while (!this.CalculationStack.isEmpty()) {
+            result = this.CalculationStack.pop().calculate(result);
+        }
+        this.variable.setValue(result);
+
+        return this.variable;
+    }
+    private int calculate(AtomicInteger expressionIndex, StringBuilder currentSTR, HashMap<String, VariableEXP> variables, OperatorsFactory operatorsFactory) {
         for(; expressionIndex.get() < this.size(); expressionIndex.set(expressionIndex.get() + 1)) {
-            int number = 0; // To store the number
+            AtomicInteger number = new AtomicInteger(0); // To store the number
             String op = ""; // To store the operator
-            boolean isDigitOrVariable = false; // To save if the currentSTR is a digit or not
+            AtomicBoolean isDigitOrVariable = new AtomicBoolean(false); // To save if the currentSTR is a digit or not
 
             // need to run until we find an operator that is not with priority
             while(op.isEmpty() && expressionIndex.get() < this.size()) {
@@ -44,39 +53,25 @@ public class Expression {
                 loopExpressionUntilSpace(currentSTR, expressionIndex);
 
                 /* -- Check if the currentSTR is a digit or a variable / if not - it is an operator -- */
-                if(Pattern.matches(PatternsUtils.NUMBER, currentSTR)) {
-                    number = Integer.parseInt(currentSTR.toString());
-                    isDigitOrVariable = true;
-                    expressionIndex.set(expressionIndex.get() + 1); // Skip the space
-                } else if(Pattern.matches(PatternsUtils.VARIABLE, currentSTR)) {
-                    number = variables.get(currentSTR.toString()).getValue();
-                    isDigitOrVariable = true;
+                if(this.isDigitOrVariableCheck(currentSTR, variables, number, isDigitOrVariable)) {
                     expressionIndex.set(expressionIndex.get() + 1); // Skip the space
                 } else {
-                    if (isDigitOrVariable) {
+                    if (isDigitOrVariable.get()) {
                         op = currentSTR.toString();
                     } else {
                         throw new IllegalArgumentException("Invalid expression.");
                     }
                 }
-                /* -- */
-
                 if (!op.isEmpty()) {
                     OperatorInfo info = operatorsFactory.findOperator(op);
                     if (info != null) {
-                        this.CalculationStack.push(info.creator.setA(number));
+                        this.CalculationStack.push(info.creator.setA(number.get()));
 
                         if (info.priority == Utilities.POWER) {
                             expressionIndex.set(expressionIndex.get() + 1); // Skip the space
                             loopExpressionUntilSpace(currentSTR, expressionIndex);
-                            if(Pattern.matches(PatternsUtils.NUMBER, currentSTR)) {
-                                number = Integer.parseInt(currentSTR.toString());
-                                expressionIndex.set(expressionIndex.get() + 1); // Skip the space
-                            } else if(Pattern.matches(PatternsUtils.VARIABLE, currentSTR)) {
-                                number = variables.get(currentSTR.toString()).getValue();
-                                expressionIndex.set(expressionIndex.get() + 1); // Skip the space
-                            }
-                            number = this.CalculationStack.pop().calculate(Integer.parseInt(currentSTR.toString()));
+                            this.isDigitOrVariableCheck(currentSTR, variables, number, isDigitOrVariable);
+                            number.set(this.CalculationStack.pop().calculate(Integer.parseInt(currentSTR.toString())));
                             op = "";
                         }
                     } else {
@@ -84,18 +79,24 @@ public class Expression {
                     }
                 }
                 if (op.isEmpty() && this.size() <= expressionIndex.get()) {
-                    result = number;
+                    return number.get();
                 }
-
-                /* ========= */
             }
         }
-        while (!this.CalculationStack.isEmpty()) {
-            result = this.CalculationStack.pop().calculate(result);
+        return 0;
+    }
+
+    private boolean isDigitOrVariableCheck(StringBuilder currentSTR, HashMap<String, VariableEXP> variables, AtomicInteger number, AtomicBoolean isDigitOrVariable) {
+        if(Pattern.matches(PatternsUtils.NUMBER, currentSTR)) {
+            number.set(Integer.parseInt(currentSTR.toString()));
+            isDigitOrVariable.set(true);
+            return true;
+        } else if(Pattern.matches(PatternsUtils.VARIABLE, currentSTR)) {
+            number.set(variables.get(currentSTR.toString()).getValue());
+            isDigitOrVariable.set(true);
+            return true;
         }
-        this.variable.setValue(result);
-        /* -- */
-        return this.variable;
+        return false;
     }
 
     private void loopExpressionUntilSpace(StringBuilder currentSTR, AtomicInteger expressionIndex) {
