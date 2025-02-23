@@ -25,6 +25,7 @@ final class PatternsUtils {
     // Variables and numbers
     static final String VARIABLE = "[a-zA-Z_][a-zA-Z0-9_]*"; // Pattern for variable names (the first character must be a letter or an underscore)
     static final String NUMBER = "\\d+"; // Pattern for numbers
+    static final String NUMBER_OR_VARIABLE = NUMBER + "|" + VARIABLE; // Pattern for numbers or variables
 
     // Parentheses
 //    static final String OPEN_PAREN = "\\("; // (
