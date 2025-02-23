@@ -44,4 +44,17 @@ public class Controller {
             System.out.println("=====");
         }
     }
+
+    public void print() {
+        System.out.print("(");
+        int i = 0;
+        for (HashMap.Entry<String, VariableEXP> v : this.variables.entrySet()) {
+            System.out.print(v.getKey() + " = " + v.getValue().getValue());
+            ++i;
+            if (i < this.variables.size()) {
+                System.out.print(", ");
+            }
+        }
+        System.out.println(")");
+    }
 }

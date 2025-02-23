@@ -10,6 +10,7 @@ public class Main {
             Controller controller = new Controller(args[0]);
             controller.readInput();
             controller.calculate();
+            controller.print();
         } catch (FileNotFoundException | IllegalArgumentException e) {
             System.err.println(e.getMessage());
         } catch (Exception e) {
