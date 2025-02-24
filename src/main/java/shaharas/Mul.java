@@ -1,14 +1,16 @@
 package shaharas;
 
+import java.util.regex.Pattern;
+
 public class Mul extends BaseBinaryOperators {
     public Mul() {
-        super(0, Utilities.MORE_1_PRIORITY, Utilities.MULTIPLY);
+        super(0, Pattern.compile(PatternsUtils.MULTIPLY), Utilities.MULTIPLY, Utilities.MORE_1_PRIORITY);
     }
     public Mul(Mul a) {
         super(a);
     }
     public Mul(int a) {
-        super(a, Utilities.MORE_1_PRIORITY, Utilities.MULTIPLY);
+        super(a, Pattern.compile(PatternsUtils.MULTIPLY), Utilities.MULTIPLY, Utilities.MORE_1_PRIORITY);
     }
 
     @Override

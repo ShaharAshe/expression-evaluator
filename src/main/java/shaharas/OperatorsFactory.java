@@ -15,24 +15,35 @@ public class OperatorsFactory {
     }
 
     private void registerOperators() {
-        registerOperator(PatternsUtils.EQL,Utilities.EQUALS,Utilities.NONE_PRIORITY,new Equals(),0, Utilities.NONE); // =
+        Equals equals = new Equals();
+        registerOperator(PatternsUtils.EQL,Utilities.EQUALS,Utilities.NONE_PRIORITY,equals,0); // =
 
-        registerOperator(PatternsUtils.PLUS,Utilities.PLUS,Utilities.REGULAR_PRIORITY,new Add(),1, Utilities.BINARY); // +
-        registerOperator(PatternsUtils.MINUS,Utilities.MINUS,Utilities.REGULAR_PRIORITY,new Sub(),1, Utilities.BINARY); // -
-        registerOperator(PatternsUtils.MULTIPLY,Utilities.MULTIPLY,Utilities.MORE_1_PRIORITY,new Mul(),1, Utilities.BINARY); // *
-        registerOperator(PatternsUtils.DIVIDE,Utilities.DIVIDE,Utilities.MORE_1_PRIORITY,new Div(),1, Utilities.BINARY); // /
+        Add add = new Add();
+        registerOperator(PatternsUtils.PLUS,Utilities.PLUS,Utilities.REGULAR_PRIORITY,add,1); // +
+        Sub sub = new Sub();
+        registerOperator(PatternsUtils.MINUS,Utilities.MINUS,Utilities.REGULAR_PRIORITY,sub,1); // -
+        Mul mul = new Mul();
+        registerOperator(PatternsUtils.MULTIPLY,Utilities.MULTIPLY,Utilities.MORE_1_PRIORITY,mul,1); // *
+        Div div = new Div();
+        registerOperator(PatternsUtils.DIVIDE,Utilities.DIVIDE,Utilities.MORE_1_PRIORITY,div,1); // /
 
-        registerOperator(PatternsUtils.PLUS_EQL,Utilities.PLUS_EQL,Utilities.MORE_1_PRIORITY,new Add(),1, Utilities.BINARY); // +=
-        registerOperator(PatternsUtils.MINUS_EQL,Utilities.MINUS_EQL,Utilities.MORE_1_PRIORITY,new Sub(),1, Utilities.BINARY); // -=
-        registerOperator(PatternsUtils.MULTIPLY_EQL,Utilities.MULTIPLY_EQL,Utilities.MORE_1_PRIORITY,new Mul(),1, Utilities.BINARY); // *=
-        registerOperator(PatternsUtils.DIVIDE_EQL,Utilities.DIVIDE_EQL,Utilities.MORE_1_PRIORITY,new Div(),1, Utilities.BINARY); // /=
+        AddEQL addEQL = new AddEQL();
+        registerOperator(PatternsUtils.PLUS_EQL,Utilities.PLUS_EQL,Utilities.MORE_1_PRIORITY,addEQL,1); // +=
+        SubEQL subEQL = new SubEQL();
+        registerOperator(PatternsUtils.MINUS_EQL,Utilities.MINUS_EQL,Utilities.MORE_1_PRIORITY,subEQL,1); // -=
+        MulEQL mulEQL = new MulEQL();
+        registerOperator(PatternsUtils.MULTIPLY_EQL,Utilities.MULTIPLY_EQL,Utilities.MORE_1_PRIORITY,mulEQL,1); // *=
+        DivEQL divEQL = new DivEQL();
+        registerOperator(PatternsUtils.DIVIDE_EQL,Utilities.DIVIDE_EQL,Utilities.MORE_1_PRIORITY,divEQL,1); // /=
 
-        registerOperator(PatternsUtils.PRE_INCREMENT,Utilities.INCREMENT,Utilities.MORE_2_PRIORITY,new AddOneLeft(this.variables),1, Utilities.UNARY); // ++i
-        registerOperator(PatternsUtils.POST_INCREMENT,Utilities.INCREMENT,Utilities.MORE_2_PRIORITY,new AddOneRight(this.variables),1, Utilities.UNARY); // i++
+        AddOneLeft addOneLeft = new AddOneLeft(this.variables);
+        registerOperator(PatternsUtils.PRE_INCREMENT,Utilities.INCREMENT,Utilities.MORE_2_PRIORITY,addOneLeft,1); // ++i
+        AddOneRight addOneRight = new AddOneRight(this.variables);
+        registerOperator(PatternsUtils.POST_INCREMENT,Utilities.INCREMENT,Utilities.MORE_2_PRIORITY,addOneRight,1); // i++
     }
-    private void registerOperator(String regex, String symbol, int precedence, Operators creator, int operandCount, String type) {
+    private void registerOperator(String regex, String symbol, int priority, Operators creator, int operandCount) {
         Pattern pattern = Pattern.compile(regex);
-        operators.put(pattern, new OperatorInfo(pattern, symbol, precedence, creator, operandCount, type));
+        operators.put(pattern, new OperatorInfo(pattern, symbol, priority, creator, operandCount));
     }
 
     public OperatorInfo findOperator(String expression) {

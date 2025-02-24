@@ -1,14 +1,16 @@
 package shaharas;
 
+import java.util.regex.Pattern;
+
 public class Div extends BaseBinaryOperators {
     public Div() {
-        super(0, Utilities.MORE_1_PRIORITY, Utilities.DIVIDE);
+        super(0, Pattern.compile(PatternsUtils.DIVIDE), Utilities.DIVIDE, Utilities.MORE_1_PRIORITY);
     }
     public Div(Div a) {
         super(a);
     }
     public Div(int a) {
-        super(a, Utilities.MORE_1_PRIORITY, Utilities.DIVIDE);
+        super(a, Pattern.compile(PatternsUtils.DIVIDE), Utilities.DIVIDE, Utilities.MORE_1_PRIORITY);
     }
 
     @Override

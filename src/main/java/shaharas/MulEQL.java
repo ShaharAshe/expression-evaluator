@@ -1,15 +1,17 @@
 package shaharas;
 
+import java.util.regex.Pattern;
+
 // new MulEQL(2).calculate(3) -> 2 *= 3
 public class MulEQL extends BaseBinaryOperators {
     public MulEQL() {
-        super(0, Utilities.MORE_1_PRIORITY, Utilities.MULTIPLY_EQL);
+        super(0, Pattern.compile(PatternsUtils.MULTIPLY_EQL), Utilities.MULTIPLY_EQL, Utilities.MORE_1_PRIORITY);
     }
     public MulEQL(MulEQL a) {
         super(a);
     }
     public MulEQL(int a) {
-        super(a, Utilities.MORE_1_PRIORITY, Utilities.MULTIPLY_EQL);
+        super(a, Pattern.compile(PatternsUtils.MULTIPLY_EQL), Utilities.MULTIPLY_EQL, Utilities.MORE_1_PRIORITY);
     }
 
     @Override

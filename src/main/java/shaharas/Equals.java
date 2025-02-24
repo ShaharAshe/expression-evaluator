@@ -1,8 +1,10 @@
 package shaharas;
 
+import java.util.regex.Pattern;
+
 public class Equals extends BaseBinaryOperators {
     public Equals() {
-        super(0, Utilities.NONE_PRIORITY, Utilities.EQUALS);
+        super(0, Pattern.compile(PatternsUtils.EQL), Utilities.EQUALS, Utilities.NONE_PRIORITY);
     }
     public Equals(Equals a) {
         super(a);

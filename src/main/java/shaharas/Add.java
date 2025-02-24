@@ -1,14 +1,16 @@
 package shaharas;
 
+import java.util.regex.Pattern;
+
 public class Add extends BaseBinaryOperators {
     public Add(){
-        super(0, Utilities.REGULAR_PRIORITY, Utilities.PLUS);
+        super(0, Pattern.compile(PatternsUtils.PLUS), Utilities.PLUS, Utilities.REGULAR_PRIORITY);
     }
     public Add(Add a){
         super(a);
     }
     public Add(int a){
-        super(a, Utilities.REGULAR_PRIORITY, Utilities.PLUS);
+        super(a, Pattern.compile(PatternsUtils.PLUS), Utilities.PLUS, Utilities.REGULAR_PRIORITY);
     }
 
     @Override

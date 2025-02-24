@@ -1,15 +1,17 @@
 package shaharas;
 
+import java.util.regex.Pattern;
+
 // new AddEQL(i).calculate(1) -> i += 1
 public class AddEQL extends BaseBinaryOperators {
     public AddEQL() {
-        super(0, Utilities.MORE_1_PRIORITY, Utilities.PLUS_EQL);
+        super(0, Pattern.compile(PatternsUtils.PLUS_EQL), Utilities.PLUS_EQL, Utilities.MORE_1_PRIORITY);
     }
     public AddEQL(AddEQL a) {
         super(a);
     }
     public AddEQL(int a) {
-        super(a, Utilities.MORE_1_PRIORITY, Utilities.PLUS_EQL);
+        super(a, Pattern.compile(PatternsUtils.PLUS_EQL), Utilities.PLUS_EQL, Utilities.MORE_1_PRIORITY);
     }
 
     @Override

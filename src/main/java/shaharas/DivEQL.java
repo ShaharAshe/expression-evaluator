@@ -1,15 +1,17 @@
 package shaharas;
 
+import java.util.regex.Pattern;
+
 // new DivEQL(2).calculate(4) -> 2 /= 4
 public class DivEQL extends BaseBinaryOperators {
     public DivEQL() {
-        super(0, Utilities.MORE_1_PRIORITY, Utilities.DIVIDE_EQL);
+        super(0, Pattern.compile(PatternsUtils.DIVIDE_EQL), Utilities.DIVIDE_EQL, Utilities.MORE_1_PRIORITY);
     }
     public DivEQL(DivEQL a) {
         super(a);
     }
     public DivEQL(int a) {
-        super(a, Utilities.MORE_1_PRIORITY, Utilities.DIVIDE_EQL);
+        super(a, Pattern.compile(PatternsUtils.DIVIDE_EQL), Utilities.DIVIDE_EQL, Utilities.MORE_1_PRIORITY);
     }
 
     @Override

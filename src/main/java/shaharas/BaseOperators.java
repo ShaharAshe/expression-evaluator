@@ -1,19 +1,24 @@
 package shaharas;
 
+import java.util.regex.Pattern;
+
 abstract class BaseOperators implements Operators {
     private int a;
-    private final int priority;
+    private final Pattern compile;
     private final String symbol;
+    private final int priority;
 
-    public BaseOperators(int a, int priority, String symbol) {
+    public BaseOperators(int a, Pattern compile, String symbol, int priority) {
         this.a = a;
-        this.priority = priority;
+        this.compile = compile;
         this.symbol = symbol;
+        this.priority = priority;
     }
     public BaseOperators(BaseOperators a) {
         this.a = a.a;
-        this.priority = a.priority;
+        this.compile = a.compile;
         this.symbol = a.symbol;
+        this.priority = a.priority;
     }
 
     public int getA(){

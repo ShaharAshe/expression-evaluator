@@ -1,8 +1,10 @@
 package shaharas;
 
+import java.util.regex.Pattern;
+
 abstract class BaseBinaryOperators extends BaseOperators {
-    public BaseBinaryOperators(int a, int priority, String symbol) {
-        super(a, priority, symbol);
+    public BaseBinaryOperators(int a, Pattern compile, String symbol, int priority) {
+        super(a, compile, symbol, priority);
     }
     public BaseBinaryOperators(BaseBinaryOperators a) {
         super(a);
