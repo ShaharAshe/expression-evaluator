@@ -5,7 +5,7 @@ import java.util.HashMap;
 public class AddOneRight extends BaseOperators { /* TODO: implements Operators */
     private HashMap<String, VariableEXP> variables = new HashMap<>();
     public AddOneRight(HashMap<String, VariableEXP> variables) {
-        super(0, Utilities.REGULAR_PRIORITY, Utilities.PLUS);
+        super(0, Utilities.MORE_3_PRIORITY, Utilities.INCREMENT);
         this.variables = variables;
     }
 
@@ -15,7 +15,7 @@ public class AddOneRight extends BaseOperators { /* TODO: implements Operators *
     }
 
     public AddOneRight(int a, HashMap<String, VariableEXP> variables) {
-        super(a, Utilities.REGULAR_PRIORITY, Utilities.PLUS);
+        super(a, Utilities.MORE_3_PRIORITY, Utilities.INCREMENT);
         this.variables = variables;
     }
 

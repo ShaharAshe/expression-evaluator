@@ -13,6 +13,8 @@ public class OperatorInfo {
         this.pattern = info.pattern;
         this.symbol = info.symbol;
         this.priority = info.priority;
+        if(info.creator == null)
+            throw new IllegalArgumentException("Creator cannot be null in the factory");
         this.creator = info.creator.clone();
         this.operandCount = info.operandCount;
     }

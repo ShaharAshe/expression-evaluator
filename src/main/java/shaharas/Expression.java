@@ -84,8 +84,7 @@ public class Expression {
                 }
                 if (!op.isEmpty()) {
                     OperatorInfo info = operatorsFactory.findOperator(op);
-                    if(info == null || info.priority == Utilities.NONE_PRIORITY)
-                    {
+                    if(info == null || info.priority == Utilities.NONE_PRIORITY) {
                         expressionIndex.set(expressionIndex.get() + 1); // Skip the space
                         number.set(0);
                         op = "";
