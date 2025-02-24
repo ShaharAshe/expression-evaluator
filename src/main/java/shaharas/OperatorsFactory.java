@@ -16,6 +16,10 @@ public class OperatorsFactory {
     private void registerOperators() {
         Equals equals = new Equals();
         registerOperator(equals.getRegex().toString(),equals.getSymbol(), equals.getPriority(), equals,0); // =
+        OpenParen openParen = new OpenParen();
+        registerOperator(openParen.getRegex().toString(),openParen.getSymbol(), openParen.getPriority(),openParen,0); // (
+        CloseParen closeParen = new CloseParen();
+        registerOperator(closeParen.getRegex().toString(),closeParen.getSymbol(), closeParen.getPriority(),closeParen,0); // )
 
         Add add = new Add();
         registerOperator(add.getRegex().toString(),add.getSymbol(), add.getPriority(),add,1); // +
@@ -39,6 +43,10 @@ public class OperatorsFactory {
         registerOperator(addOneLeft.getRegex().toString(),addOneLeft.getSymbol(), addOneLeft.getPriority(),addOneLeft,1); // ++i
         AddOneRight addOneRight = new AddOneRight(this.variables);
         registerOperator(addOneRight.getRegex().toString(),addOneRight.getSymbol(), addOneRight.getPriority(),addOneRight,1); // i++
+        SubOneLeft subOneLeft = new SubOneLeft(this.variables);
+        registerOperator(subOneLeft.getRegex().toString(),subOneLeft.getSymbol(), subOneLeft.getPriority(),subOneLeft,1); // --i
+        SubOneRight subOneRight = new SubOneRight(this.variables);
+        registerOperator(subOneRight.getRegex().toString(),subOneRight.getSymbol(), subOneRight.getPriority(),subOneRight,1); // i--
     }
     private void registerOperator(String regex, String symbol, int priority, Operators creator, int operandCount) {
         Pattern pattern = Pattern.compile(regex);

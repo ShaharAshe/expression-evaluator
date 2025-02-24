@@ -7,7 +7,6 @@ public class AddOneLeft extends BaseUnaryOperators {
     public AddOneLeft(HashMap<String, VariableEXP> variables) {
         super(0, Pattern.compile(PatternsUtils.PRE_INCREMENT), Utilities.INCREMENT, Utilities.MORE_2_PRIORITY, variables);
     }
-
     public AddOneLeft(AddOneLeft a) {
         super(a);
     }

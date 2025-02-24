@@ -9,13 +9,13 @@ final class PatternsUtils {
     static final String MINUS = "^-$"; // -
     static final String MULTIPLY = "^\\*$"; // *
     static final String DIVIDE = "^/$"; // /
-//    static final String POWER = "^\\^$"; // ^
+    // static final String POWER = "^\\^$"; // ^
 
     // Increment/Decrement
     static final String PRE_INCREMENT = "^\\+\\+([a-zA-Z_][a-zA-Z0-9_]*)$"; // ++i
     static final String POST_INCREMENT = "^([a-zA-Z_][a-zA-Z0-9_]*)\\+\\+$"; // i++
-//    static final String PRE_DECREMENT = "^--(?=\\w+)$"; // --i
-//    static final String POST_DECREMENT = "^(?<=\\w+)--$"; // i--
+    static final String PRE_DECREMENT = "^--([a-zA-Z_][a-zA-Z0-9_]*)$"; // --i
+    static final String POST_DECREMENT = "^([a-zA-Z_][a-zA-Z0-9_]*)--$"; // i--
 
     // Assignment operators
     static final String EQL = "^=$"; // =
@@ -26,10 +26,9 @@ final class PatternsUtils {
 
     // Variables and numbers
     static final String VARIABLE = "^[a-zA-Z_][a-zA-Z0-9_]*$"; // Pattern for variable names (the first character must be a letter or an underscore)
-    static final String NUMBER = "^\\d+$"; // Pattern for numbers
-    static final String NUMBER_OR_VARIABLE = NUMBER + "|" + VARIABLE; // Pattern for numbers or variables
+    static final String NUMBER = "^-?\\d+$"; // Pattern for numbers
 
     // Parentheses
-//    static final String OPEN_PAREN = "^\\($"; // (
-//    static final String CLOSE_PAREN = "^\\)$"; // )
+    static final String OPEN_PAREN = "^\\($"; // (
+    static final String CLOSE_PAREN = "^\\)$"; // )
 }
