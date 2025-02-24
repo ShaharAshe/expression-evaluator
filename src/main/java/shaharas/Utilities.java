@@ -10,7 +10,8 @@ final class Utilities {
     static final int MORE_1_PRIORITY = 1;
     static final int MORE_2_PRIORITY = 2;
     static final int MORE_3_PRIORITY = 3;
-    static final int HIGHEST_PRIORITY = 4;
+    static final int MORE_4_PRIORITY = 4;
+    static final int TOP_PRIORITY = 5;
 
     static final String BINARY = "binary";
     static final String UNARY = "unary";
