@@ -55,11 +55,4 @@ public class OperatorsFactory {
         }
         return null;
     }
-
-    public int createOperator(String variable, OperatorInfo info, List<Integer> operands) {
-        if (operands.size() != info.operandCount) {
-            throw new IllegalArgumentException("Expected " + info.operandCount + " operands, got " + operands.size());
-        }
-        return info.creator.calculate(variable, operands.stream().mapToInt(i -> i).toArray());
-    }
 }
