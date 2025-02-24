@@ -50,6 +50,8 @@ public class Expression {
                 }
 
                 info.creator.calculate(currentSTR.toString());
+            } else {
+                throw new IllegalArgumentException("Invalid expression.");
             }
         }
         this.variable = new VariableEXP(currentSTR);
@@ -82,6 +84,11 @@ public class Expression {
             number.set(0);
             loopExpressionUntilSpace(currentSTR, expressionIndex);
             expressionIndex.set(expressionIndex.get() + 1); // Skip the space
+
+            OperatorInfo info = operatorsFactory.findOperator(currentSTR.toString());
+            if (info == null) {
+                throw new IllegalArgumentException("Invalid operator.");
+            }
         }
 
         for(; expressionIndex.get() < this.size(); expressionIndex.set(expressionIndex.get() + 1)) {
@@ -89,8 +96,9 @@ public class Expression {
 
             // need to run until we find an operator that is not with priority
             while(op.isEmpty() && expressionIndex.get() < this.size()) {
-                // Print every part of the expression in a new line
                 this.loopExpressionUntilSpace(currentSTR, expressionIndex);
+
+
 
                 /* -- Check if the currentSTR is a digit or a variable / if not - it is an operator -- */
                 if(this.isDigitOrVariableCheck(currentSTR, variables, number, isDigitOrVariable)) {
@@ -103,15 +111,24 @@ public class Expression {
                             continue;
                         }
                     } else {
+                        /* -- Start - i++ / ++i area -- */
+
+
+
+                        /* -- End - i++ / ++i area -- */
                         throw new IllegalArgumentException("Invalid expression.");
                     }
                 }
                 if (!op.isEmpty()) {
                     OperatorInfo info = operatorsFactory.findOperator(op);
                     if(info == null || info.priority == Utilities.NONE_PRIORITY) {
+                        if(3<expressionIndex.get()) {
+                            throw new IllegalArgumentException("Invalid expression.");
+                        }
                         expressionIndex.set(expressionIndex.get() + 1); // Skip the space
                         number.set(0);
                         op = "";
+                        isDigitOrVariable.set(false);
                         continue;
                     } else if (info != null) {
                         this.CalculationStack.push(info.creator.setA(number.get()));

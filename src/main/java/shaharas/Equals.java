@@ -14,8 +14,8 @@ public class Equals extends BaseOperators{
     }
 
     @Override
-    public Operators setA(int a){ throw new UnsupportedOperationException(); }
+    public Operators setA(int a){ throw new UnsupportedOperationException("Invalid operation"); }
 
     @Override
-    public int calculate(String variable, int... args){ throw new UnsupportedOperationException(); }
+    public int calculate(String variable, int... args){ throw new UnsupportedOperationException("Invalid operation"); }
 }
