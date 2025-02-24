@@ -1,6 +1,6 @@
 package shaharas;
 
-public class Add extends BaseOperators{
+public class Add extends BaseBinaryOperators {
     public Add(){
         super(0, Utilities.REGULAR_PRIORITY, Utilities.PLUS);
     }

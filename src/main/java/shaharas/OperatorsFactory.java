@@ -22,13 +22,13 @@ public class OperatorsFactory {
         registerOperator(PatternsUtils.MULTIPLY,Utilities.MULTIPLY,Utilities.MORE_1_PRIORITY,new Mul(),1, Utilities.BINARY); // *
         registerOperator(PatternsUtils.DIVIDE,Utilities.DIVIDE,Utilities.MORE_1_PRIORITY,new Div(),1, Utilities.BINARY); // /
 
-        registerOperator(PatternsUtils.PLUS_EQL,Utilities.PLUS_EQL,Utilities.MORE_2_PRIORITY,new Add(),1, Utilities.BINARY); // +=
-        registerOperator(PatternsUtils.MINUS_EQL,Utilities.MINUS_EQL,Utilities.MORE_2_PRIORITY,new Sub(),1, Utilities.BINARY); // -=
-        registerOperator(PatternsUtils.MULTIPLY_EQL,Utilities.MULTIPLY_EQL,Utilities.MORE_2_PRIORITY,new Mul(),1, Utilities.BINARY); // *=
-        registerOperator(PatternsUtils.DIVIDE_EQL,Utilities.DIVIDE_EQL,Utilities.MORE_2_PRIORITY,new Div(),1, Utilities.BINARY); // /=
+        registerOperator(PatternsUtils.PLUS_EQL,Utilities.PLUS_EQL,Utilities.MORE_1_PRIORITY,new Add(),1, Utilities.BINARY); // +=
+        registerOperator(PatternsUtils.MINUS_EQL,Utilities.MINUS_EQL,Utilities.MORE_1_PRIORITY,new Sub(),1, Utilities.BINARY); // -=
+        registerOperator(PatternsUtils.MULTIPLY_EQL,Utilities.MULTIPLY_EQL,Utilities.MORE_1_PRIORITY,new Mul(),1, Utilities.BINARY); // *=
+        registerOperator(PatternsUtils.DIVIDE_EQL,Utilities.DIVIDE_EQL,Utilities.MORE_1_PRIORITY,new Div(),1, Utilities.BINARY); // /=
 
-        registerOperator(PatternsUtils.PRE_INCREMENT,Utilities.INCREMENT,Utilities.MORE_3_PRIORITY,new AddOneLeft(this.variables),1, Utilities.UNARY); // ++i
-        registerOperator(PatternsUtils.POST_INCREMENT,Utilities.INCREMENT,Utilities.MORE_3_PRIORITY,new AddOneRight(this.variables),1, Utilities.UNARY); // i++
+        registerOperator(PatternsUtils.PRE_INCREMENT,Utilities.INCREMENT,Utilities.MORE_2_PRIORITY,new AddOneLeft(this.variables),1, Utilities.UNARY); // ++i
+        registerOperator(PatternsUtils.POST_INCREMENT,Utilities.INCREMENT,Utilities.MORE_2_PRIORITY,new AddOneRight(this.variables),1, Utilities.UNARY); // i++
     }
     private void registerOperator(String regex, String symbol, int precedence, Operators creator, int operandCount, String type) {
         Pattern pattern = Pattern.compile(regex);

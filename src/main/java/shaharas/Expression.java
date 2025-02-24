@@ -26,7 +26,7 @@ public class Expression {
         if(!Pattern.matches(PatternsUtils.VARIABLE, currentSTR)) {
             OperatorInfo info = operatorsFactory.findOperator(currentSTR.toString());
             List<Integer> values = new ArrayList<>();
-            if(this.checkUnary(expressionIndex, currentSTR, variables, operatorsFactory, values, Utilities.MORE_3_PRIORITY)) {
+            if(this.checkUnary(expressionIndex, currentSTR, variables, operatorsFactory, values, Utilities.MORE_2_PRIORITY)) {
                 info.creator.calculate(currentSTR.toString(), values.stream().mapToInt(i -> i).toArray());
             } else {
                 throw new IllegalArgumentException("Invalid expression.");
@@ -72,7 +72,7 @@ public class Expression {
 
                 OperatorInfo info = operatorsFactory.findOperator(currentSTR.toString());
                 List<Integer> values = new ArrayList<>();
-                if(this.checkUnary(expressionIndex, currentSTR, variables, operatorsFactory, values, Utilities.MORE_3_PRIORITY, Utilities.MORE_4_PRIORITY)) {
+                if(this.checkUnary(expressionIndex, currentSTR, variables, operatorsFactory, values, Utilities.MORE_2_PRIORITY, Utilities.MORE_3_PRIORITY)) {
                     int temp = info.creator.calculate(currentSTR.toString(), values.stream().mapToInt(i -> i).toArray());
                     currentSTR.setLength(0);
                     currentSTR.append(temp);
@@ -163,7 +163,7 @@ public class Expression {
                         }
                     }
                 }
-                if (info.priority == Utilities.MORE_3_PRIORITY && !Pattern.matches(PatternsUtils.VARIABLE, currentSTR)) {
+                if (info.priority == Utilities.MORE_2_PRIORITY && !Pattern.matches(PatternsUtils.VARIABLE, currentSTR)) {
                     throw new IllegalArgumentException("Invalid expression.");
                 }
                 return true;

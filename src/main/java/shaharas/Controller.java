@@ -7,36 +7,22 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Controller {
-    private final String fileName;
-    private final ArrayList<Expression> expressionsInput; // List of expressions read from the file/ console
+    private final InRead readInput;
+    private final OutPrint printOutput;
+    private ArrayList<Expression> expressionsInput; // List of expressions read from the file/ console
     private HashMap<String, VariableEXP> variables; // List of variables and their values
     OperatorsFactory operatorsFactory;
 
-    public Controller(String fileName) {
+    public Controller(InRead readInput, OutPrint printOutput) {
         this.expressionsInput = new ArrayList<>();
         this.variables = new HashMap<>();
-        this.fileName = fileName;
+        this.readInput = readInput;
+        this.printOutput = printOutput;
         this.operatorsFactory = new OperatorsFactory(this.variables);
     }
 
     public void readInput() throws FileNotFoundException {
-        try (BufferedReader reader = new BufferedReader(new java.io.FileReader((this.fileName)))) {
-            String lineCont;
-
-            // Read each line from the file and create an Expression object
-            while ((lineCont = reader.readLine()) != null) {
-                String line = lineCont.trim();
-                if(line.isEmpty()) {
-                    continue;
-                }
-                this.expressionsInput.add(new Expression(lineCont));
-
-                /* if you want to print each expression */
-                // this.expressionsInput.get(this.expressionsInput.size() - 1).print();
-            }
-        } catch (IOException e) {
-            throw new FileNotFoundException("Reading from file " + this.fileName + " failed.");
-        }
+        this.expressionsInput = this.readInput.process();
     }
 
     public void calculate(){
@@ -48,15 +34,6 @@ public class Controller {
     }
 
     public void print() {
-        System.out.print("(");
-        int i = 0;
-        for (HashMap.Entry<String, VariableEXP> v : this.variables.entrySet()) {
-            System.out.print(v.getKey() + " = " + v.getValue().getValue());
-            ++i;
-            if (i < this.variables.size()) {
-                System.out.print(", ");
-            }
-        }
-        System.out.println(")");
+        this.printOutput.process(this.variables);
     }
 }

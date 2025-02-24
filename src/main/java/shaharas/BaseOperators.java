@@ -20,11 +20,6 @@ abstract class BaseOperators implements Operators {
         return this.a;
     }
 
-    public Operators setA(int a){
-        this.a = a;
-        return null;
-    }
-
     public int getPriority() {
         return this.priority;
     }
@@ -33,6 +28,10 @@ abstract class BaseOperators implements Operators {
         return this.symbol;
     }
 
+    public Operators setA(int a){
+        this.a = a;
+        return this;
+    }
     public abstract Operators clone();
     public abstract int calculate(String variable, int... args);
 }

@@ -2,21 +2,13 @@ package shaharas;
 
 import java.util.HashMap;
 
-public class AddOneRight extends BaseOperators { /* TODO: implements Operators */
-    private HashMap<String, VariableEXP> variables = new HashMap<>();
+public class AddOneRight extends BaseUnaryOperators {
     public AddOneRight(HashMap<String, VariableEXP> variables) {
-        super(0, Utilities.MORE_3_PRIORITY, Utilities.INCREMENT);
-        this.variables = variables;
+        super(0, Utilities.MORE_2_PRIORITY, Utilities.INCREMENT, variables);
     }
 
     public AddOneRight(AddOneRight a) {
         super(a);
-        this.variables = a.variables;
-    }
-
-    public AddOneRight(int a, HashMap<String, VariableEXP> variables) {
-        super(a, Utilities.MORE_3_PRIORITY, Utilities.INCREMENT);
-        this.variables = variables;
     }
 
     @Override
@@ -26,14 +18,13 @@ public class AddOneRight extends BaseOperators { /* TODO: implements Operators *
 
     @Override
     public Operators setA(int a) {
-        super.setA(a);
         return this;
     }
 
     @Override
     public int calculate(String variable, int... args) {
-        int temp = this.variables.get(variable).getValue();
-        this.variables.get(variable).setValue(temp + 1);
+        int temp = super.getVariables().get(variable).getValue();
+        super.getVariables().get(variable).setValue(temp + 1);
         return temp;
     }
 }
