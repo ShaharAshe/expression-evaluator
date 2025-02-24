@@ -53,13 +53,23 @@ public class Expression {
         if(currentSTR.isEmpty()) {
             loopExpressionUntilSpace(currentSTR, expressionIndex);
             expressionIndex.set(expressionIndex.get() + 1); // Skip the space
+            OperatorInfo info = operatorsFactory.findOperator(currentSTR.toString());
+            List<Integer> values = new ArrayList<>();
+            int tempNumber = 0;
             if(Pattern.matches(PatternsUtils.NUMBER, currentSTR.toString())) {
-                number.set(Integer.parseInt(currentSTR.toString()));
+                tempNumber = Integer.parseInt(currentSTR.toString());
+//                number.set(Integer.parseInt(currentSTR.toString()));
             } else if(Pattern.matches(PatternsUtils.VARIABLE, currentSTR.toString())) {
-                number.set(variables.get(currentSTR.toString()).getValue());
+                tempNumber = variables.get(currentSTR.toString()).getValue();
+//                number.set(variables.get(currentSTR.toString()).getValue());
+            } else if(this.checkUnary(expressionIndex, currentSTR, variables, operatorsFactory, values, Utilities.MORE_2_PRIORITY, Utilities.MORE_3_PRIORITY)) {
+                tempNumber = info.creator.calculate(currentSTR.toString(), values.stream().mapToInt(i -> i).toArray());
+                currentSTR.setLength(0);
+                currentSTR.append(tempNumber);
             } else {
                 throw new IllegalArgumentException("Invalid expression.");
             }
+            number.set(tempNumber);
             isDigitOrVariable.set(true);
         } else {
 
@@ -160,19 +170,36 @@ public class Expression {
 
                             /* ======== */
 
-
-                            /* ========*/
-
-                            int tempNumber;
-                            if(Pattern.matches(PatternsUtils.NUMBER, currentSTR.toString())) {
-                                tempNumber = Integer.parseInt(currentSTR.toString());
-                            } else if(Pattern.matches(PatternsUtils.VARIABLE, currentSTR.toString())) {
-                                tempNumber = variables.get(currentSTR.toString()).getValue();
+                            if(info != null && info.priority == Utilities.TOP_PRIORITY)
+                            {
+                                if(info.symbol.equals(Utilities.OPEN_PARENTHESIS)) {
+                                    // expressionIndex.set(expressionIndex.get() + 1); // Skip the space
+                                    number.set(this.calculateLoop(expressionIndex, new StringBuilder(), variables, operatorsFactory, new Stack<>()));
+                                    expressionIndex.set(expressionIndex.get() + 1); // Skip the space
+                                    number.set(CalculationStack.pop().calculate("", number.get()));
+                                    op = "";
+                                } else {
+                                    if (number.get() == 0) {
+                                        throw new IllegalArgumentException("Invalid expression.");
+                                    } else {
+                                        while (!CalculationStack.isEmpty()) {
+                                            number.set(CalculationStack.pop().calculate("", number.get()));
+                                        }
+                                        return number.get();
+                                    }
+                                }
                             } else {
-                                throw new IllegalArgumentException("Invalid expression.");
+                                int tempNumber;
+                                if (Pattern.matches(PatternsUtils.NUMBER, currentSTR.toString())) {
+                                    tempNumber = Integer.parseInt(currentSTR.toString());
+                                } else if (Pattern.matches(PatternsUtils.VARIABLE, currentSTR.toString())) {
+                                    tempNumber = variables.get(currentSTR.toString()).getValue();
+                                } else {
+                                    throw new IllegalArgumentException("Invalid expression.");
+                                }
+                                number.set(CalculationStack.pop().calculate("", tempNumber));
+                                op = "";
                             }
-                            number.set(CalculationStack.pop().calculate("", tempNumber));
-                            op = "";
                         } else {
                             number.set(0);
                         }

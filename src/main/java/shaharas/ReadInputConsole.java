@@ -20,7 +20,9 @@ public class ReadInputConsole  implements InRead{
         System.out.println("Enter expressions (or 'exit' to quit):");
         String lineCont = reader.nextLine();
         while (!lineCont.equals("exit")) {
-            this.expressionsInput.add(new Expression(lineCont));
+            if(!lineCont.isEmpty()){
+                this.expressionsInput.add(new Expression(lineCont));
+            }
             lineCont = reader.nextLine(); // Always read input from the user. until "exit".
         }
         return this.expressionsInput;
