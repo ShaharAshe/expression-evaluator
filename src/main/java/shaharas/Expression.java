@@ -9,11 +9,9 @@ import java.util.regex.Pattern;
 public class Expression {
     private final String expression;
     private VariableEXP variable;
-    private final Stack<Operators> CalculationStack;
 
     public Expression(String expression) {
         this.expression = expression;
-        this.CalculationStack = new Stack<>();
         this.variable = null;
     }
 
@@ -22,15 +20,13 @@ public class Expression {
         StringBuilder currentSTR = new StringBuilder();
         int result = 0;
 
-        /* Save the variable from the expression */
         loopExpressionUntilSpace(currentSTR, expressionIndex);
         expressionIndex.set(expressionIndex.get() + 1); // Skip the space
-        /* End save the variable from the expression */
 
         if(!Pattern.matches(PatternsUtils.VARIABLE, currentSTR)) {
             OperatorInfo info = operatorsFactory.findOperator(currentSTR.toString());
             List<Integer> values = new ArrayList<>();
-            if(checkUnary(expressionIndex, currentSTR, variables, operatorsFactory, values, Utilities.MORE_3_PRIORITY)) {
+            if(this.checkUnary(expressionIndex, currentSTR, variables, operatorsFactory, values, Utilities.MORE_3_PRIORITY)) {
                 info.creator.calculate(currentSTR.toString(), values.stream().mapToInt(i -> i).toArray());
             } else {
                 throw new IllegalArgumentException("Invalid expression.");
@@ -39,24 +35,18 @@ public class Expression {
 
         this.variable = new VariableEXP(currentSTR);
 
-        /* Start - puts the expression in the stack - and returns the result */
-        result = calculate(expressionIndex, currentSTR, variables, operatorsFactory);
-        /* End - puts the expression in the stack - and returns the result */
-
-        /* Start - calculate the result */
-        while (!this.CalculationStack.isEmpty()) {
-            result = this.CalculationStack.pop().calculate("", result);
+        Stack<Operators> CalculationStack = new Stack<>();
+        result = this.calculateLoop(expressionIndex, currentSTR, variables, operatorsFactory, CalculationStack);
+        while (!CalculationStack.isEmpty()) {
+            result = CalculationStack.pop().calculate("", result);
         }
-        /* End - calculate the result */
 
-        /* Start - set the result to the variable */
         this.variable.setValue(result);
-        /* End - set the result to the variable */
 
         return this.variable;
     }
 
-    private int calculate(AtomicInteger expressionIndex, StringBuilder currentSTR, HashMap<String, VariableEXP> variables, OperatorsFactory operatorsFactory) {
+    private int calculateLoop(AtomicInteger expressionIndex, StringBuilder currentSTR, HashMap<String, VariableEXP> variables, OperatorsFactory operatorsFactory, Stack<Operators> CalculationStack) {
         AtomicInteger number = new AtomicInteger(0); // To store the number
         AtomicBoolean isDigitOrVariable = new AtomicBoolean(false); // To save if the currentSTR is a digit or not
 
@@ -77,21 +67,17 @@ public class Expression {
         for(; expressionIndex.get() < this.size(); expressionIndex.set(expressionIndex.get() + 1)) {
             String op = ""; // To store the operator
 
-            // need to run until we find an operator that is not with priority
             while(op.isEmpty() && expressionIndex.get() < this.size()) {
                 this.loopExpressionUntilSpace(currentSTR, expressionIndex);
 
-                /* -- Start - i++ / ++i area -- */
                 OperatorInfo info = operatorsFactory.findOperator(currentSTR.toString());
                 List<Integer> values = new ArrayList<>();
-                if(info != null && checkUnary(expressionIndex, currentSTR, variables, operatorsFactory, values, Utilities.MORE_3_PRIORITY, Utilities.MORE_4_PRIORITY)) {
+                if(this.checkUnary(expressionIndex, currentSTR, variables, operatorsFactory, values, Utilities.MORE_3_PRIORITY, Utilities.MORE_4_PRIORITY)) {
                     int temp = info.creator.calculate(currentSTR.toString(), values.stream().mapToInt(i -> i).toArray());
                     currentSTR.setLength(0);
                     currentSTR.append(temp);
                 }
-                /* -- End - i++ / ++i area -- */
 
-                /* -- Check if the currentSTR is a digit or a variable / if not - it is an operator -- */
                 if(this.isDigitOrVariableCheck(currentSTR, variables, number, isDigitOrVariable)) {
                     expressionIndex.set(expressionIndex.get() + 1); // Skip the space
                 } else {
@@ -115,8 +101,8 @@ public class Expression {
                         op = "";
                         isDigitOrVariable.set(false);
                         continue;
-                    } else if (info != null) {
-                        this.CalculationStack.push(info.creator.setA(number.get()));
+                    } else {
+                        CalculationStack.push(info.creator.setA(number.get()));
                         /* -- Check if the operator has priority */
                         if (info.priority != Utilities.REGULAR_PRIORITY && info.priority != Utilities.NONE_PRIORITY) {
                             expressionIndex.set(expressionIndex.get() + 1); // Skip the space
@@ -124,6 +110,7 @@ public class Expression {
                             expressionIndex.set(expressionIndex.get() + 1); // Skip the space
                             this.isDigitOrVariableCheck(currentSTR, variables, number, isDigitOrVariable);
                             int tempNumber;
+                            
                             if(Pattern.matches(PatternsUtils.NUMBER, currentSTR.toString())) {
                                 tempNumber = Integer.parseInt(currentSTR.toString());
                             } else if(Pattern.matches(PatternsUtils.VARIABLE, currentSTR.toString())) {
@@ -131,13 +118,11 @@ public class Expression {
                             } else {
                                 throw new IllegalArgumentException("Invalid expression.");
                             }
-                            number.set(this.CalculationStack.pop().calculate("", tempNumber));
+                            number.set(CalculationStack.pop().calculate("", tempNumber));
                             op = "";
                         } else {
                             number.set(0);
                         }
-                    } else {
-                        throw new IllegalArgumentException("Invalid operator.");
                     }
                 }
                 if (op.isEmpty() && this.size() <= expressionIndex.get()) {
@@ -150,11 +135,12 @@ public class Expression {
 
     private Boolean checkUnary(AtomicInteger expressionIndex, StringBuilder currentSTR, HashMap<String, VariableEXP> variables, OperatorsFactory operatorsFactory, List<Integer> values, int... args) {
         OperatorInfo info = operatorsFactory.findOperator(currentSTR.toString());
-        for (int argIndex = 0; argIndex < args.length; ++argIndex) {
-            if (info.priority == args[argIndex]) {
+        if(info == null) return false;
+        for (int arg : args) {
+            if (info.priority == arg) {
                 Matcher matcher = info.pattern.matcher(currentSTR.toString());
 
-                if(matcher.groupCount()<info.operandCount)
+                if (matcher.groupCount() < info.operandCount)
                     throw new IllegalArgumentException("Expected " + info.operandCount + " operands, got " + matcher.groupCount());
 
                 while (matcher.find()) {
@@ -162,13 +148,13 @@ public class Expression {
                         String groupTemp = matcher.group(i);
                         if (Pattern.matches(PatternsUtils.VARIABLE, groupTemp)) {
                             values.add(variables.get(groupTemp).getValue());
-                            if(i == 1) {
+                            if (i == 1) {
                                 currentSTR.setLength(0);
                                 currentSTR.append(groupTemp);
                             }
                         } else if (Pattern.matches(PatternsUtils.NUMBER, groupTemp)) {
                             values.add(Integer.parseInt(groupTemp));
-                            if(i == 1) {
+                            if (i == 1) {
                                 currentSTR.setLength(0);
                                 currentSTR.append(groupTemp);
                             }
@@ -177,7 +163,7 @@ public class Expression {
                         }
                     }
                 }
-                if(info.priority == Utilities.MORE_3_PRIORITY && !Pattern.matches(PatternsUtils.VARIABLE, currentSTR)) {
+                if (info.priority == Utilities.MORE_3_PRIORITY && !Pattern.matches(PatternsUtils.VARIABLE, currentSTR)) {
                     throw new IllegalArgumentException("Invalid expression.");
                 }
                 return true;
@@ -186,17 +172,25 @@ public class Expression {
         return false;
     }
 
-    private boolean isDigitOrVariableCheck(StringBuilder currentSTR, HashMap<String, VariableEXP> variables, AtomicInteger number, AtomicBoolean isDigitOrVariable) {
+    private boolean isDigitCheck(StringBuilder currentSTR, AtomicInteger number, AtomicBoolean isDigitOrVariable) {
         if(Pattern.matches(PatternsUtils.NUMBER, currentSTR)) {
             number.set(Integer.parseInt(currentSTR.toString()));
             isDigitOrVariable.set(true);
             return true;
-        } else if(Pattern.matches(PatternsUtils.VARIABLE, currentSTR)) {
+        }
+        return false;
+    }
+    private boolean isVariableCheck(StringBuilder currentSTR, HashMap<String, VariableEXP> variables, AtomicInteger number, AtomicBoolean isDigitOrVariable) {
+        if(Pattern.matches(PatternsUtils.VARIABLE, currentSTR)) {
             number.set(variables.get(currentSTR.toString()).getValue());
             isDigitOrVariable.set(true);
             return true;
         }
         return false;
+    }
+    private boolean isDigitOrVariableCheck(StringBuilder currentSTR, HashMap<String, VariableEXP> variables, AtomicInteger number, AtomicBoolean isDigitOrVariable) {
+        return (this.isVariableCheck(currentSTR, variables, number, isDigitOrVariable) ||
+                this.isDigitCheck(currentSTR, number, isDigitOrVariable));
     }
 
     private void loopExpressionUntilSpace(StringBuilder currentSTR, AtomicInteger expressionIndex) {
