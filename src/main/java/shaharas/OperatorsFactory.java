@@ -15,30 +15,30 @@ public class OperatorsFactory {
 
     private void registerOperators() {
         Equals equals = new Equals();
-        registerOperator(PatternsUtils.EQL,Utilities.EQUALS,Utilities.NONE_PRIORITY,equals,0); // =
+        registerOperator(equals.getRegex().toString(),equals.getSymbol(), equals.getPriority(), equals,0); // =
 
         Add add = new Add();
-        registerOperator(PatternsUtils.PLUS,Utilities.PLUS,Utilities.REGULAR_PRIORITY,add,1); // +
+        registerOperator(add.getRegex().toString(),add.getSymbol(), add.getPriority(),add,1); // +
         Sub sub = new Sub();
-        registerOperator(PatternsUtils.MINUS,Utilities.MINUS,Utilities.REGULAR_PRIORITY,sub,1); // -
+        registerOperator(sub.getRegex().toString(),sub.getSymbol(), sub.getPriority(),sub,1); // -
         Mul mul = new Mul();
-        registerOperator(PatternsUtils.MULTIPLY,Utilities.MULTIPLY,Utilities.MORE_1_PRIORITY,mul,1); // *
+        registerOperator(mul.getRegex().toString(),mul.getSymbol(), mul.getPriority(),mul,1); // *
         Div div = new Div();
-        registerOperator(PatternsUtils.DIVIDE,Utilities.DIVIDE,Utilities.MORE_1_PRIORITY,div,1); // /
+        registerOperator(div.getRegex().toString(),div.getSymbol(), div.getPriority(),div,1); // /
 
         AddEQL addEQL = new AddEQL();
-        registerOperator(PatternsUtils.PLUS_EQL,Utilities.PLUS_EQL,Utilities.MORE_1_PRIORITY,addEQL,1); // +=
+        registerOperator(addEQL.getRegex().toString(),addEQL.getSymbol(), addEQL.getPriority(),addEQL,1); // +=
         SubEQL subEQL = new SubEQL();
-        registerOperator(PatternsUtils.MINUS_EQL,Utilities.MINUS_EQL,Utilities.MORE_1_PRIORITY,subEQL,1); // -=
+        registerOperator(subEQL.getRegex().toString(),subEQL.getSymbol(), subEQL.getPriority(),subEQL,1); // -=
         MulEQL mulEQL = new MulEQL();
-        registerOperator(PatternsUtils.MULTIPLY_EQL,Utilities.MULTIPLY_EQL,Utilities.MORE_1_PRIORITY,mulEQL,1); // *=
+        registerOperator(mulEQL.getRegex().toString(),mulEQL.getSymbol(), mulEQL.getPriority(),mulEQL,1); // *=
         DivEQL divEQL = new DivEQL();
-        registerOperator(PatternsUtils.DIVIDE_EQL,Utilities.DIVIDE_EQL,Utilities.MORE_1_PRIORITY,divEQL,1); // /=
+        registerOperator(divEQL.getRegex().toString(),divEQL.getSymbol(), divEQL.getPriority(),divEQL,1); // /=
 
         AddOneLeft addOneLeft = new AddOneLeft(this.variables);
-        registerOperator(PatternsUtils.PRE_INCREMENT,Utilities.INCREMENT,Utilities.MORE_2_PRIORITY,addOneLeft,1); // ++i
+        registerOperator(addOneLeft.getRegex().toString(),addOneLeft.getSymbol(), addOneLeft.getPriority(),addOneLeft,1); // ++i
         AddOneRight addOneRight = new AddOneRight(this.variables);
-        registerOperator(PatternsUtils.POST_INCREMENT,Utilities.INCREMENT,Utilities.MORE_2_PRIORITY,addOneRight,1); // i++
+        registerOperator(addOneRight.getRegex().toString(),addOneRight.getSymbol(), addOneRight.getPriority(),addOneRight,1); // i++
     }
     private void registerOperator(String regex, String symbol, int priority, Operators creator, int operandCount) {
         Pattern pattern = Pattern.compile(regex);

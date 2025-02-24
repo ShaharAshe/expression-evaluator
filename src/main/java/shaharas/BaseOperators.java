@@ -4,21 +4,25 @@ import java.util.regex.Pattern;
 
 abstract class BaseOperators implements Operators {
     private int a;
-    private final Pattern compile;
+    private final Pattern regex;
     private final String symbol;
     private final int priority;
 
-    public BaseOperators(int a, Pattern compile, String symbol, int priority) {
+    public BaseOperators(int a, Pattern regex, String symbol, int priority) {
         this.a = a;
-        this.compile = compile;
+        this.regex = regex;
         this.symbol = symbol;
         this.priority = priority;
     }
     public BaseOperators(BaseOperators a) {
         this.a = a.a;
-        this.compile = a.compile;
+        this.regex = a.regex;
         this.symbol = a.symbol;
         this.priority = a.priority;
+    }
+
+    public Pattern getRegex() {
+        return this.regex;
     }
 
     public int getA(){
