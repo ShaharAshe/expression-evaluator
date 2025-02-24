@@ -1,10 +1,9 @@
 package shaharas;
 
-import java.util.HashMap;
-import java.util.Objects;
-import java.util.Stack;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Expression {
@@ -28,6 +27,31 @@ public class Expression {
         expressionIndex.set(expressionIndex.get() + 1); // Skip the space
         /* End save the variable from the expression */
 
+        if(!Pattern.matches(PatternsUtils.VARIABLE, currentSTR)) {
+            OperatorInfo info = operatorsFactory.findOperator(currentSTR.toString());
+            if(info.priority == Utilities.MORE_3_PRIORITY) {
+                Matcher matcher = info.pattern.matcher(currentSTR.toString());
+
+                if(matcher.groupCount()<info.operandCount)
+                    throw new IllegalArgumentException("Expected " + info.operandCount + " operands, got " + matcher.groupCount());
+                String variableSTR = "";
+
+                int groupIndex = 1;
+                while (matcher.find()) {
+                    String groupTemp = matcher.group(1);
+
+                    if (Pattern.matches(PatternsUtils.VARIABLE, groupTemp)) {
+                        variableSTR = groupTemp;
+                        currentSTR = new StringBuilder(groupTemp);
+                        break;
+                    } else {
+                        throw new IllegalArgumentException("Invalid expression.");
+                    }
+                }
+
+                info.creator.calculate(currentSTR.toString());
+            }
+        }
         this.variable = new VariableEXP(currentSTR);
 
         /* Start - puts the expression in the stack - and returns the result */
@@ -111,7 +135,7 @@ public class Expression {
                 }
             }
         }
-        return 0;
+        return number.get();
     }
 
     private boolean isDigitOrVariableCheck(StringBuilder currentSTR, HashMap<String, VariableEXP> variables, AtomicInteger number, AtomicBoolean isDigitOrVariable) {

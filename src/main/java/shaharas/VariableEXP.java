@@ -8,6 +8,10 @@ public class VariableEXP {
         this.name = String.valueOf(name);
         this.value = 0;
     }
+    public VariableEXP(String name, int value) {
+        this.name = name;
+        this.value = value;
+    }
 
     public String getName() {
         return this.name;

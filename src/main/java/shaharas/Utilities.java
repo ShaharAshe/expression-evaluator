@@ -12,6 +12,10 @@ final class Utilities {
     static final int MORE_3_PRIORITY = 3;
     static final int HIGHEST_PRIORITY = 4;
 
+    static final String BINARY = "binary";
+    static final String UNARY = "unary";
+    static final String NONE = "none";
+
     static final String PLUS = "+";
     static final String MINUS = "-";
     static final String MULTIPLY = "*";

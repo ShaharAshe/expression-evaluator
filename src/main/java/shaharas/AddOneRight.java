@@ -32,8 +32,8 @@ public class AddOneRight extends BaseOperators { /* TODO: implements Operators *
 
     @Override
     public int calculate(String variable, int... args) {
-        int temp = variables.get(variable).getValue();
-        variables.get(variable).setValue(temp + 1);
+        int temp = this.variables.get(variable).getValue();
+        this.variables.get(variable).setValue(temp + 1);
         return temp;
     }
 }
