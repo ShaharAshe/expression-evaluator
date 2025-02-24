@@ -25,6 +25,10 @@ public class Controller {
 
             // Read each line from the file and create an Expression object
             while ((lineCont = reader.readLine()) != null) {
+                String line = lineCont.trim();
+                if(line.isEmpty()) {
+                    continue;
+                }
                 this.expressionsInput.add(new Expression(lineCont));
 
                 /* if you want to print each expression */

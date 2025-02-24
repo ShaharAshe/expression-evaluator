@@ -17,7 +17,8 @@ public class VariableEXP {
         return this.value;
     }
 
-    public void setValue(int value) {
+    public int setValue(int value) {
         this.value = value;
+        return this.value;
     }
 }

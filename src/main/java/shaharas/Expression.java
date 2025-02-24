@@ -26,14 +26,23 @@ public class Expression {
         /* Save the variable from the expression */
         loopExpressionUntilSpace(currentSTR, expressionIndex);
         expressionIndex.set(expressionIndex.get() + 1); // Skip the space
+        /* End save the variable from the expression */
 
         this.variable = new VariableEXP(currentSTR);
 
+        /* Start - puts the expression in the stack - and returns the result */
         result = calculate(expressionIndex, currentSTR, variables, operatorsFactory);
+        /* End - puts the expression in the stack - and returns the result */
+
+        /* Start - calculate the result */
         while (!this.CalculationStack.isEmpty()) {
             result = this.CalculationStack.pop().calculate("",result);
         }
+        /* End - calculate the result */
+
+        /* Start - set the result to the variable */
         this.variable.setValue(result);
+        /* End - set the result to the variable */
 
         return this.variable;
     }
@@ -65,15 +74,24 @@ public class Expression {
                 } else {
                     if (isDigitOrVariable.get()) {
                         op = currentSTR.toString();
+                        if(op.equals(" ")) {
+                            expressionIndex.set(expressionIndex.get() + 1); // Skip the space
+                            continue;
+                        }
                     } else {
                         throw new IllegalArgumentException("Invalid expression.");
                     }
                 }
                 if (!op.isEmpty()) {
                     OperatorInfo info = operatorsFactory.findOperator(op);
-                    if (info != null) {
+                    if(info == null || info.priority == Utilities.NONE_PRIORITY)
+                    {
+                        expressionIndex.set(expressionIndex.get() + 1); // Skip the space
+                        number.set(0);
+                        op = "";
+                        continue;
+                    } else if (info != null) {
                         this.CalculationStack.push(info.creator.setA(number.get()));
-
                         /* -- Check if the operator has priority */
                         if (info.priority != Utilities.REGULAR_PRIORITY && info.priority != Utilities.NONE_PRIORITY) {
                             expressionIndex.set(expressionIndex.get() + 1); // Skip the space
