@@ -55,6 +55,8 @@ mvn clean install
    mvn exec:java -Dexec.mainClass="shaharas.Main" -Dexec.args="-in input.txt -out output.txt"
    ```
 
+**Example for arguments-vectors:** `-in <input-file-path> -out <output-file-path>`
+
 2. **Note**: `If no input or output file is provided, the program defaults to reading from the console and writing to the console.`
 
 ### **Controller Workflow**
