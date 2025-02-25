@@ -27,7 +27,7 @@ public class Div extends BaseBinaryOperators {
     @Override
     public int calculate(String variable, int... args) {
         int b = args[0];
-        if(b == 0) { throw new IllegalArgumentException("Cannot divide by zero."); }
+        if(b == 0) { throw new ArithmeticException("Cannot divide by zero."); }
         return super.getA() / b;
     }
 }

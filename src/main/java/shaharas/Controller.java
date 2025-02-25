@@ -21,19 +21,22 @@ public class Controller {
         this.operatorsFactory = new OperatorsFactory(this.variables);
     }
 
-    public void readInput() throws FileNotFoundException {
+    public Controller readInput() throws FileNotFoundException {
         this.expressionsInput = this.readInput.process();
+        return this;
     }
 
-    public void calculate(){
+    public Controller calculate(){
         for (Expression expression : this.expressionsInput) {
             /* The calculate method gets the variable and the factory */
             VariableEXP variable = expression.calculate(this.operatorsFactory, this.variables);
             this.variables.put(variable.getName(), variable);
         }
+        return this;
     }
 
-    public void print() {
+    public Controller print() {
         this.printOutput.process(this.variables);
+        return this;
     }
 }

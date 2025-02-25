@@ -8,14 +8,7 @@ import java.util.Map;
 public class Main {
     public static void main(String[] args) {
         try {
-            Map<String, String> arguments = parseArguments(args);
-            InRead inRead =  (arguments.get(Utilities.INPUT) != null)? new ReadInputFile(arguments.get(Utilities.INPUT)) : new ReadInputConsole();
-            OutPrint outPrint = (arguments.get(Utilities.OUTPUT) != null)? new PrintOutputFile(arguments.get(Utilities.OUTPUT)) : new PrintOutputConsole();
-
-            Controller controller = new Controller(inRead, outPrint);
-            controller.readInput();
-            controller.calculate();
-            controller.print();
+            Controller controller = createController(args).readInput().calculate().print();
         } catch (FileNotFoundException | IllegalArgumentException e) {
             System.err.println(e.getMessage());
         } catch (Exception e) {
@@ -24,29 +17,15 @@ public class Main {
         }
     }
 
-    public static Map<String, String> parseArguments(String[] args) {
-        Map<String, String> arguments = new HashMap<>();
+    private static Controller createController(String[] args) {
+        VectorParser vectorParser = new VectorParser(args).parseArguments();
 
-        for (int i = 0; i < args.length; i++) {
-            switch (args[i]) {
-                case Utilities.INPUT: {
-                    if (i + 1 < args.length) {
-                        arguments.put(Utilities.INPUT, args[++i]);
-                        break;
-                    }
-                    throw new IllegalArgumentException("No value provided for input argument");
-                }
-                case Utilities.OUTPUT: {
-                    if (i + 1 < args.length) {
-                        arguments.put(Utilities.OUTPUT, args[++i]);
-                        break;
-                    }
-                    throw new IllegalArgumentException("No value provided for output argument");
-                }
-                default:
-                    System.out.println("Unknown argument: " + args[i]);
-            }
-        }
-        return arguments;
+        String tempInput = vectorParser.getArgumentValueByKey(Utilities.INPUT);
+        String tempOutput = vectorParser.getArgumentValueByKey(Utilities.OUTPUT);
+
+        InRead inRead =  (tempInput != null)? new ReadInputFile(tempInput) : new ReadInputConsole();
+        OutPrint outPrint = (tempOutput != null)? new PrintOutputFile(tempOutput) : new PrintOutputConsole();
+
+        return new Controller(inRead, outPrint);
     }
 }
