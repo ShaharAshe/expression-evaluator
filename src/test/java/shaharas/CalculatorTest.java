@@ -32,8 +32,7 @@ public class CalculatorTest {
     @Test
     void testDivByZero() {
         /* Save the exception */
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-            // Div(1).calculate(0) -> 1 / 0
+        ArithmeticException exception = assertThrows(ArithmeticException.class, () -> {
             new Div(1).calculate("",0);
         });
 

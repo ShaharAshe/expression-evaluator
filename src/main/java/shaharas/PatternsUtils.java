@@ -1,9 +1,16 @@
 package shaharas;
 
+/**
+ * Utility class that holds the regular expression patterns for various types of operators,
+ * assignment operations, variable and number patterns, and parentheses. This class is designed
+ * to avoid instantiation and only provides static constants for use in the program.
+ */
 final class PatternsUtils {
+    // Prevent instantiation of this utility class
     private PatternsUtils() {
         throw new IllegalStateException("Pattern class is a utility class and should not be instantiated.");
     }
+
     // Basic operators
     static final String PLUS = "^\\+$"; // +
     static final String MINUS = "^-$"; // -
