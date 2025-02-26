@@ -26,7 +26,7 @@ public class FileOperationsTest {
      * This test ensures that variables are written to the output file correctly.
      */
     @Test
-    public void testFileWrite() throws IOException {
+    public void testFileWrite() {
         HashMap<String, VariableEXP> variables = new HashMap<>();
         variables.put("a", new VariableEXP("a", 10));
 

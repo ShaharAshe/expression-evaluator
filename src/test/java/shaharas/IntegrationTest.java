@@ -18,7 +18,6 @@ class IntegrationTest {
      */
     @Test
     void testOperatorFactoryIntegration() {
-        String expression = "x + 5";
         HashMap<String, VariableEXP> variables = new HashMap<>();
         variables.put("x", new VariableEXP("x", 10));
 

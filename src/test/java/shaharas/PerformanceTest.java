@@ -2,7 +2,6 @@ package shaharas;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
-import java.util.*;
 
 /**
  * The PerformanceTest class is designed to test the performance of the calculation system,

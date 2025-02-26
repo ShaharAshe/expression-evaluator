@@ -1,6 +1,9 @@
 package shaharas;
 
 import org.junit.jupiter.api.Test;
+
+import java.util.HashMap;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -15,8 +18,11 @@ public class IncrementDecrementTest {
      */
     @Test
     public void testPreIncrement() {
+        HashMap<String, VariableEXP> variables = new HashMap<>();
         VariableEXP var = new VariableEXP("a", 5);
-        assertEquals(6, var.setValue(var.getValue() + 1), "Pre-increment should add 1");
+        variables.put("a", var);
+        int temp = var.getValue()+1;
+        assertEquals(temp, new AddOneLeft(variables).calculate("a"), "Post-increment should return old value");
     }
 
     /**
@@ -25,10 +31,11 @@ public class IncrementDecrementTest {
      */
     @Test
     public void testPostIncrement() {
+        HashMap<String, VariableEXP> variables = new HashMap<>();
         VariableEXP var = new VariableEXP("a", 5);
+        variables.put("a", var);
         int temp = var.getValue();
-        var.setValue(var.getValue() + 1);
-        assertEquals(temp, temp, "Post-increment should return old value");
+        assertEquals(temp, new AddOneRight(variables).calculate("a"), "Post-increment should return old value");
     }
 
     /**
@@ -37,8 +44,11 @@ public class IncrementDecrementTest {
      */
     @Test
     public void testPreDecrement() {
+        HashMap<String, VariableEXP> variables = new HashMap<>();
         VariableEXP var = new VariableEXP("a", 5);
-        assertEquals(4, var.setValue(var.getValue() - 1), "Pre-decrement should subtract 1");
+        variables.put("a", var);
+        int temp = var.getValue()-1;
+        assertEquals(temp, new SubOneLeft(variables).calculate("a"), "Post-increment should return old value");
     }
 
     /**
@@ -47,10 +57,11 @@ public class IncrementDecrementTest {
      */
     @Test
     public void testPostDecrement() {
+        HashMap<String, VariableEXP> variables = new HashMap<>();
         VariableEXP var = new VariableEXP("a", 5);
+        variables.put("a", var);
         int temp = var.getValue();
-        var.setValue(var.getValue() - 1);
-        assertEquals(temp, temp, "Post-decrement should return old value");
+        assertEquals(temp, new SubOneRight(variables).calculate("a"), "Post-increment should return old value");
     }
 }
 

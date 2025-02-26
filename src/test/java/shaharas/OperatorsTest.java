@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * The OperatorsTest class tests the calculation methods of the operators in the 'shaharas' package.
+ * The OperatorsTest class tests the calculation methods of the operators.
  * It ensures that the mathematical operators (addition, subtraction, multiplication, and division)
  * produce the correct results when performing calculations with operands.
  */

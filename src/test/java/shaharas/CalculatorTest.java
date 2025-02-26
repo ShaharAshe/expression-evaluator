@@ -56,9 +56,7 @@ public class CalculatorTest {
     @Test
     void testDivByZero() {
         /* Save the exception */
-        ArithmeticException exception = assertThrows(ArithmeticException.class, () -> {
-            new Div(1).calculate("",0);
-        });
+        ArithmeticException exception = assertThrows(ArithmeticException.class, () -> new Div(1).calculate("",0));
 
         /* Check if the exception message is correct */
         assertEquals("Cannot divide by zero.", exception.getMessage(), "Exception message should be 'Cannot divide by zero.'");

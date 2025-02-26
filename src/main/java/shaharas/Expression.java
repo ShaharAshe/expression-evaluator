@@ -44,7 +44,7 @@ public class Expression {
             List<Integer> values = new ArrayList<>();
 
             /* To check if it's a unary */
-            if(this.checkUnary(expressionIndex, currentSTR, variables, operatorsFactory, values, Utilities.MORE_2_PRIORITY)) {
+            if(this.checkUnary(currentSTR, variables, operatorsFactory, values, Utilities.MORE_2_PRIORITY)) {
                 info.getCreator().calculate(currentSTR.toString(), values.stream().mapToInt(i -> i).toArray());
             } else {
                 throw new IllegalArgumentException("Invalid expression.");
@@ -108,7 +108,7 @@ public class Expression {
                 }
             } else {
                 AtomicInteger tempNumber = new AtomicInteger(0);
-                checkIfNumberOrVariableOrUnary(tempNumber, currentSTR, variable, variables, expressionIndex, info, operatorsFactory, values);
+                checkIfNumberOrVariableOrUnary(tempNumber, currentSTR, variables, info, operatorsFactory, values);
                 number.set(tempNumber.get());
             }
 
@@ -165,7 +165,7 @@ public class Expression {
 
                 /* Check if unary */
                 List<Integer> values = new ArrayList<>();
-                if(this.checkUnary(expressionIndex, currentSTR, variables, operatorsFactory, values, Utilities.MORE_2_PRIORITY, Utilities.MORE_3_PRIORITY)) {
+                if(this.checkUnary(currentSTR, variables, operatorsFactory, values, Utilities.MORE_2_PRIORITY, Utilities.MORE_3_PRIORITY)) {
                     if (info == null) {
                         throw new IllegalArgumentException("Invalid expression.");
                     }
@@ -208,7 +208,7 @@ public class Expression {
 
                             info = operatorsFactory.findOperator(currentSTR.toString());
                             values = new ArrayList<>();
-                            if(this.checkUnary(expressionIndex, currentSTR, variables, operatorsFactory, values, Utilities.MORE_2_PRIORITY, Utilities.MORE_3_PRIORITY)) {
+                            if(this.checkUnary(currentSTR, variables, operatorsFactory, values, Utilities.MORE_2_PRIORITY, Utilities.MORE_3_PRIORITY)) {
                                 int temp = info.getCreator().calculate(currentSTR.toString(), values.stream().mapToInt(i -> i).toArray());
                                 currentSTR.setLength(0);
                                 currentSTR.append(temp);
@@ -233,7 +233,7 @@ public class Expression {
                                 }
                             } else {
                                 AtomicInteger tempNumber = new AtomicInteger(0);
-                                checkIfNumberOrVariableOrUnary(tempNumber, currentSTR, variable, variables, expressionIndex, info, operatorsFactory, values);
+                                checkIfNumberOrVariableOrUnary(tempNumber, currentSTR, variables, info, operatorsFactory, values);
                                 number.set(CalculationStack.pop().calculate("", tempNumber.get()));
                                 op = "";
                             }
@@ -268,21 +268,19 @@ public class Expression {
      *
      * @param number The AtomicInteger to store the result.
      * @param currentSTR The StringBuilder holding the current expression part.
-     * @param variable A VariableEXP object that represents a variable.
      * @param variables A map holding the variables.
-     * @param expressionIndex The index of the current position in the expression.
      * @param info The OperatorInfo object for the current operator.
      * @param operatorsFactory The OperatorsFactory used to find operators.
      * @param values A list of values for unary operator calculations.
      * @throws IllegalArgumentException If the expression is invalid.
      */
-    private void checkIfNumberOrVariableOrUnary(AtomicInteger number, StringBuilder currentSTR, VariableEXP variable, HashMap<String, VariableEXP> variables, AtomicInteger expressionIndex, OperatorInfo info, OperatorsFactory operatorsFactory, List<Integer> values) {
+    private void checkIfNumberOrVariableOrUnary(AtomicInteger number, StringBuilder currentSTR, HashMap<String, VariableEXP> variables, OperatorInfo info, OperatorsFactory operatorsFactory, List<Integer> values) {
         int tempNumber = 0;
         if(Pattern.matches(PatternsUtils.NUMBER, currentSTR.toString())) {
             tempNumber = Integer.parseInt(currentSTR.toString());
         } else if(Pattern.matches(PatternsUtils.VARIABLE, currentSTR.toString())) {
             tempNumber = variables.get(currentSTR.toString()).getValue();
-        } else if(this.checkUnary(expressionIndex, currentSTR, variables, operatorsFactory, values, Utilities.MORE_2_PRIORITY, Utilities.MORE_3_PRIORITY)) {
+        } else if(this.checkUnary(currentSTR, variables, operatorsFactory, values, Utilities.MORE_2_PRIORITY, Utilities.MORE_3_PRIORITY)) {
             tempNumber = info.getCreator().calculate(currentSTR.toString(), values.stream().mapToInt(i -> i).toArray());
             currentSTR.setLength(0);
             currentSTR.append(tempNumber);
@@ -296,7 +294,6 @@ public class Expression {
      * Checks if the current part of the expression matches a unary operator with the given priorities.
      * If it matches, it calculates the result of the unary operator.
      *
-     * @param expressionIndex The index of the current position in the expression.
      * @param currentSTR The StringBuilder holding the current expression part.
      * @param variables A map holding the variables.
      * @param operatorsFactory The OperatorsFactory used to find operators.
@@ -305,7 +302,7 @@ public class Expression {
      * @return true if the unary operator is found and calculated; false otherwise.
      * @throws IllegalArgumentException If the expression is invalid.
      */
-    private Boolean checkUnary(AtomicInteger expressionIndex, StringBuilder currentSTR, HashMap<String, VariableEXP> variables, OperatorsFactory operatorsFactory, List<Integer> values, int... args) {
+    private Boolean checkUnary(StringBuilder currentSTR, HashMap<String, VariableEXP> variables, OperatorsFactory operatorsFactory, List<Integer> values, int... args) {
         OperatorInfo info = operatorsFactory.findOperator(currentSTR.toString());
         if(info == null) return false;
         for (int arg : args) {

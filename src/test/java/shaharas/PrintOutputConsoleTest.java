@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import java.io.PrintStream;
 import java.util.HashMap;
 import static org.mockito.Mockito.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * The PrintOutputConsoleTest class is designed to test the functionality of the PrintOutputConsole class.

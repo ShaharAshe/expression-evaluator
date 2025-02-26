@@ -114,9 +114,7 @@ class VariableEXPTest {
      */
     @Test
     void testSetEmptyName() {
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-            new VariableEXP("", 10);
-        });
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () ->  new VariableEXP("", 10));
         assertEquals("Variable name is not valid", exception.getMessage(), "Exception message should be 'Variable name is not valid'");
     }
 
@@ -136,9 +134,7 @@ class VariableEXPTest {
      */
     @Test
     void testInvalidName() {
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-            new VariableEXP("1invalid", 10);
-        });
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> new VariableEXP("1invalid", 10));
         assertEquals("Variable name is not valid", exception.getMessage(), "Exception message should be 'Variable name is not valid'");
     }
 }
