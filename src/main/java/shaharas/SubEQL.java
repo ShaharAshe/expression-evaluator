@@ -70,7 +70,7 @@ public class SubEQL extends BaseBinaryOperators {
      * Performs the subtraction assignment operation. It subtracts the right operand 'B' from the left operand 'A',
      * then updates the left operand 'A' with the result. This is essentially the 'A -= B' operation.
      * <p>
-     * The method uses the functionality from the Div operator to perform the subtraction operation.
+     * The method uses the functionality from the Sub operator to perform the subtraction operation.
      * In this implementation, the method behaves like an assignment operator where 'A' is updated.
      * </p>
      *
@@ -81,7 +81,7 @@ public class SubEQL extends BaseBinaryOperators {
     @Override
     public int calculate(String variable, int... args) {
         int b = args[0];
-        // Use the Div() operator
-        return new Div(super.getA()).calculate(variable, b);
+        // Use the Sub() operator
+        return new Sub(super.getA()).calculate(variable, b);
     }
 }
