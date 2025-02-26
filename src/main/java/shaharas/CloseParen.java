@@ -7,9 +7,10 @@ import java.util.regex.Pattern;
  * This class extends the BaseBinaryOperators class but does not perform any actual operations.
  * It serves as a placeholder for the closing parenthesis symbol and is primarily used to handle
  * the syntactical structure of an expression.
- *
+ * <p>
  * The CloseParen operator has the highest priority and is not intended to perform calculations.
  * It can be used in the parsing and tokenizing process to recognize the end of sub-expressions.
+ * </p>
  */
 public class CloseParen extends BaseBinaryOperators {
     /**

@@ -1,8 +1,6 @@
 package shaharas;
 
-import java.io.BufferedReader;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -10,16 +8,17 @@ import java.util.HashMap;
  * The Controller class serves as the main coordinator for reading input expressions, calculating results,
  * and printing the output. It acts as the central part of the system that orchestrates the execution flow
  * of reading, calculating, and displaying results for expressions and variables.
- *
+ * <p>
  * The class depends on external input and output handling classes, such as InRead and OutPrint,
  * to process expressions from a file or console and print the results to the user.
+ * </p>
  */
 public class Controller {
     private final InRead readInput; // For reading input from the user
     private final OutPrint printOutput; // For printing output to the user
     private ArrayList<Expression> expressionsInput; // List of expressions read from the file/ console
-    private HashMap<String, VariableEXP> variables; // List of variables and their values
-    OperatorsFactory operatorsFactory; // Factory for creating operators
+    private final HashMap<String, VariableEXP> variables; // List of variables and their values
+    private final OperatorsFactory operatorsFactory; // Factory for creating operators
 
     /**
      * Constructor to initialize the Controller with input reading and output printing mechanisms.

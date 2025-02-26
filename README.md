@@ -50,14 +50,12 @@ mvn clean install
     - Input file (`-in`): Specifies the input file path (e.g., contains variables and expressions).
     - Output file (`-out`): Specifies the output file path where results will be written.
 
-   Example:
-   ```bash
-   mvn exec:java -Dexec.mainClass="shaharas.Main" -Dexec.args="-in input.txt -out output.txt"
-   ```
 
 **Example for arguments-vectors:** `-in <input-file-path> -out <output-file-path>`
 
-2. **Note**: `If no input or output file is provided, the program defaults to reading from the console and writing to the console.`
+**Note**: `If no input or output file is provided, the program defaults to reading from the console and writing to the console.`
+
+---
 
 ### **Controller Workflow**
 
@@ -79,16 +77,6 @@ mvn clean install
   ```text
   (x = 5, y = 10, z = 15)
   ```
-
-### **Running the Project from Command Line**
-
-To run the project directly from the command line:
-
-```bash
-mvn exec:java -Dexec.mainClass="shaharas.Main" -Dexec.args="-in input.txt -out output.txt"
-```
-
-Ensure that `input.txt` contains the necessary expressions to be processed.
 
 ---
 

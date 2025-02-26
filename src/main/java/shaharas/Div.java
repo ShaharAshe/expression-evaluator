@@ -5,9 +5,10 @@ import java.util.regex.Pattern;
 /**
  * The Div class represents the division binary operator ("/") for performing integer division operations.
  * It extends the BaseBinaryOperators class and provides the necessary logic to handle division operations.
- *
+ * <p>
  * This class is used to perform division between two operands, ensuring proper handling of division by zero
  * and providing an appropriate error message when such an operation is attempted.
+ * </p>
  */
 public class Div extends BaseBinaryOperators {
     /**

@@ -16,7 +16,7 @@ final class PatternsUtils {
     static final String MINUS = "^-$"; // -
     static final String MULTIPLY = "^\\*$"; // *
     static final String DIVIDE = "^/$"; // /
-    // static final String POWER = "^\\^$"; // ^
+    // static final String POWER = "^([a-zA-Z_][a-zA-Z0-9_]*|\\d+)\\^([a-zA-Z_][a-zA-Z0-9_]*|\\d+)$"; // ^
 
     // Increment/Decrement
     static final String PRE_INCREMENT = "^\\+\\+([a-zA-Z_][a-zA-Z0-9_]*)$"; // ++i

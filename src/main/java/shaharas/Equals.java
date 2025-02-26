@@ -6,10 +6,11 @@ import java.util.regex.Pattern;
  * The Equals class represents the equality operator ("="), typically used for checking whether
  * two values are equal. This class extends from the BaseBinaryOperators class and is designed
  * to work with an expression where the equality operator is involved.
- *
+ * <p>
  * However, unlike other operators, the Equals operator does not perform any calculation or
  * assignment, and attempting to use it will throw an exception. It is typically used as a placeholder
  * for equality in certain syntaxes or parsing operations.
+ * </p>
  */
 public class Equals extends BaseBinaryOperators {
     /**

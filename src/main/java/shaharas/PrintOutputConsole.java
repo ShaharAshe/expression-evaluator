@@ -1,9 +1,6 @@
 package shaharas;
 
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Scanner;
 
 /**
  * Implements the OutPrint interface to print the contents of variables to the console.

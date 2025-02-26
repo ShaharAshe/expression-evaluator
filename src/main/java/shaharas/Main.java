@@ -1,8 +1,6 @@
 package shaharas;
 
 import java.io.FileNotFoundException;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Main class for executing the application.

@@ -6,9 +6,10 @@ import java.util.regex.Pattern;
  * The DivEQL class represents the division equal-to operator ("/=") for performing integer division
  * and updating the left operand with the result. It extends the BaseBinaryOperators class and overrides
  * the necessary methods to perform the division assignment operation.
- *
+ * <p>
  * This class is used to perform division of two operands and update the left operand (a /= b) with the
  * result of the division.
+ * </p>
  */
 public class DivEQL extends BaseBinaryOperators {
     /**
