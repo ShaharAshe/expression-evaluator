@@ -1,7 +1,7 @@
 
 ---
 
-# **ShaharAsher - Expression Evaluation Project**
+# **Shahar Asher - Expression Evaluation Project**
 
 This project provides a framework for handling basic mathematical operations on variables, supporting operations like addition, subtraction, multiplication, and division. It includes an expression evaluation system where users can define variables, set values, and perform calculations. The project is implemented in Java with unit tests for verifying the functionality of each component.
 
