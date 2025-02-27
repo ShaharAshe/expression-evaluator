@@ -40,7 +40,7 @@ public class ReadInputFile implements InRead{
                 if (line.isEmpty()) {
                     continue;
                 }
-                this.expressionsInput.add(new Expression(lineCont));
+                this.expressionsInput.add(new Expression(line));
 
                 /* if you want to print each expression */
                 // this.expressionsInput.get(this.expressionsInput.size() - 1).print();
