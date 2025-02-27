@@ -15,6 +15,7 @@ This project provides a framework for handling basic mathematical operations on 
 4. [Usage](#usage)
 5. [Project Structure](#project-structure)
 6. [Testing](#testing)
+7. [License](#license)
 
 ## **About**
 
