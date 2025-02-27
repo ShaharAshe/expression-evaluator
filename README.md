@@ -130,6 +130,7 @@ mvn clean install
 │       ├── FileOperationsTest.java
 │       ├── IncrementDecrementTest.java
 │       ├── IntegrationTest.java
+│       ├── MainTest.java
 │       ├── OperatorsFactoryTest.java
 │       ├── OperatorsTest.java
 │       ├── PerformanceTest.java
