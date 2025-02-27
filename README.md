@@ -5,6 +5,8 @@
 
 This project provides a framework for handling basic mathematical operations on variables, supporting operations like addition, subtraction, multiplication, and division. It includes an expression evaluation system where users can define variables, set values, and perform calculations. The project is implemented in Java with unit tests for verifying the functionality of each component.
 
+[![LICENSE](https://img.shields.io/badge/license-MIT-yellow.svg)](./LICENSE)
+
 ## **Table of Contents**
 
 1. [About](#about)
@@ -154,5 +156,9 @@ mvn test
 ### **Performance Testing**
 
 A performance test is included to evaluate the handling of a large number of operations. The system should complete within a reasonable time frame (less than 2 seconds).
+
+### **License**
+
+This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
 
 ---
