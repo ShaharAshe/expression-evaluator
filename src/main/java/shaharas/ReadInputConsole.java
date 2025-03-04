@@ -31,12 +31,13 @@ public class ReadInputConsole  implements InRead{
 
         System.out.println("Enter expressions (or 'exit' to quit):");
         String lineCont = reader.nextLine();
-        while (!lineCont.equals("exit")) {
-            String line = lineCont.trim();
+        String line = lineCont.trim();
+        while (!line.equals("exit")) {
             if(!line.isEmpty()){
                 this.expressionsInput.add(new Expression(line));
             }
             lineCont = reader.nextLine(); // Always read input from the user. until "exit".
+            line = lineCont.trim();
         }
         return this.expressionsInput;
     }
