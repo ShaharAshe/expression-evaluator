@@ -115,16 +115,21 @@ public class Expression {
             isDigitOrVariable.set(true);
         } else {
             try {
-                number.set(variables.get(this.variable.getName()).getValue());
-                isDigitOrVariable.set(true);
-            } catch (NullPointerException e) {
-                number.set(0);
                 this.loopToSpaceAndSkipSpace(currentSTR, expressionIndex);
-
                 OperatorInfo info = operatorsFactory.findOperator(currentSTR.toString());
                 if (info == null) {
                     throw new IllegalArgumentException("Invalid operator.");
+                } else if (info.getPriority() == Utilities.NONE_PRIORITY){
+                    number.set(0);
+                } else if(info.getPriority() == Utilities.MORE_4_PRIORITY) {
+                    number.set(variables.get(this.variable.getName()).getValue());
+                    isDigitOrVariable.set(true);
+                    CalculationStack.push(info.getCreator().setA(number.get()));
+                } else {
+                    throw new IllegalArgumentException("Invalid operator.");
                 }
+            } catch (IllegalArgumentException e) {
+                throw new IllegalArgumentException("Invalid operator.");
             }
         }
 
@@ -188,60 +193,61 @@ public class Expression {
                     }
                 }
                 if (!op.isEmpty()) {
-                    if(info == null || info.getPriority() == Utilities.NONE_PRIORITY) {
-                        if(3<expressionIndex.get()) {
-                            throw new IllegalArgumentException("Invalid expression.");
-                        }
+                    if(info == null) {
                         expressionIndex.set(expressionIndex.get() + 1); // Skip the space
                         number.set(0);
                         op = "";
                         isDigitOrVariable.set(false);
                         continue;
+                    } else if(info.getPriority() == Utilities.NONE_PRIORITY) {
+                        throw new IllegalArgumentException("Invalid expression.");
+                    } else if(info.getPriority() == Utilities.MORE_4_PRIORITY) {
+                        throw new IllegalArgumentException("Invalid expression.");
                     } else {
-                        CalculationStack.push(info.getCreator().setA(number.get()));
+                            CalculationStack.push(info.getCreator().setA(number.get()));
 
-                        /* Handle (*) or (/) or operators with higher priority */
-                        if (info.getPriority() != Utilities.REGULAR_PRIORITY && info.getPriority() != Utilities.NONE_PRIORITY) {
-                            expressionIndex.set(expressionIndex.get() + 1); // Skip the space
-                            this.loopToSpaceAndSkipSpace(currentSTR, expressionIndex);
-                            this.isDigitOrVariableCheck(currentSTR, variables, number, isDigitOrVariable);
+                            /* Handle (*) or (/) or operators with higher priority */
+                            if (info.getPriority() != Utilities.REGULAR_PRIORITY && info.getPriority() != Utilities.NONE_PRIORITY) {
+                                expressionIndex.set(expressionIndex.get() + 1); // Skip the space
+                                this.loopToSpaceAndSkipSpace(currentSTR, expressionIndex);
+                                this.isDigitOrVariableCheck(currentSTR, variables, number, isDigitOrVariable);
 
-                            info = operatorsFactory.findOperator(currentSTR.toString());
-                            values = new ArrayList<>();
-                            if(this.checkUnary(currentSTR, variables, operatorsFactory, values, Utilities.MORE_2_PRIORITY, Utilities.MORE_3_PRIORITY)) {
-                                int temp = info.getCreator().calculate(currentSTR.toString(), values.stream().mapToInt(i -> i).toArray());
-                                currentSTR.setLength(0);
-                                currentSTR.append(temp);
-                            }
+                                info = operatorsFactory.findOperator(currentSTR.toString());
+                                values = new ArrayList<>();
+                                if(this.checkUnary(currentSTR, variables, operatorsFactory, values, Utilities.MORE_2_PRIORITY, Utilities.MORE_3_PRIORITY)) {
+                                    int temp = info.getCreator().calculate(currentSTR.toString(), values.stream().mapToInt(i -> i).toArray());
+                                    currentSTR.setLength(0);
+                                    currentSTR.append(temp);
+                                }
 
-                            if(info != null && info.getPriority() == Utilities.TOP_PRIORITY)
-                            {
-                                if(info.getSymbol().equals(Utilities.OPEN_PARENTHESIS)) {
-                                    number.set(this.calculateLoop(expressionIndex, new StringBuilder(), variables, operatorsFactory, new Stack<>()));
-                                    expressionIndex.set(expressionIndex.get() + 1); // Skip the space
-                                    number.set(CalculationStack.pop().calculate("", number.get()));
-                                    op = "";
-                                } else {
-                                    if (number.get() == 0) {
-                                        throw new IllegalArgumentException("Invalid expression.");
+                                if(info != null && info.getPriority() == Utilities.TOP_PRIORITY)
+                                {
+                                    if(info.getSymbol().equals(Utilities.OPEN_PARENTHESIS)) {
+                                        number.set(this.calculateLoop(expressionIndex, new StringBuilder(), variables, operatorsFactory, new Stack<>()));
+                                        expressionIndex.set(expressionIndex.get() + 1); // Skip the space
+                                        number.set(CalculationStack.pop().calculate("", number.get()));
+                                        op = "";
                                     } else {
-                                        while (!CalculationStack.isEmpty()) {
-                                            number.set(CalculationStack.pop().calculate("", number.get()));
+                                        if (number.get() == 0) {
+                                            throw new IllegalArgumentException("Invalid expression.");
+                                        } else {
+                                            while (!CalculationStack.isEmpty()) {
+                                                number.set(CalculationStack.pop().calculate("", number.get()));
+                                            }
+                                            return number.get();
                                         }
-                                        return number.get();
                                     }
+                                } else {
+                                    AtomicInteger tempNumber = new AtomicInteger(0);
+                                    checkIfNumberOrVariableOrUnary(tempNumber, currentSTR, variables, info, operatorsFactory, values);
+                                    number.set(CalculationStack.pop().calculate("", tempNumber.get()));
+                                    op = "";
                                 }
                             } else {
-                                AtomicInteger tempNumber = new AtomicInteger(0);
-                                checkIfNumberOrVariableOrUnary(tempNumber, currentSTR, variables, info, operatorsFactory, values);
-                                number.set(CalculationStack.pop().calculate("", tempNumber.get()));
-                                op = "";
+                                number.set(0);
+                                isDigitOrVariable.set(false);
                             }
-                        } else {
-                            number.set(0);
-                            isDigitOrVariable.set(false);
                         }
-                    }
                 }
                 if (op.isEmpty() && this.size() <= expressionIndex.get()) {
                     return number.get();

@@ -12,7 +12,7 @@ public class MulEQL extends BaseBinaryOperators {
      * Initializes the operator with predefined values for multiplication assignment.
      */
     public MulEQL() {
-        super(0, Pattern.compile(PatternsUtils.MULTIPLY_EQL), Utilities.MULTIPLY_EQL, Utilities.MORE_1_PRIORITY);
+        super(0, Pattern.compile(PatternsUtils.MULTIPLY_EQL), Utilities.MULTIPLY_EQL, Utilities.MORE_4_PRIORITY);
     }
 
     /**

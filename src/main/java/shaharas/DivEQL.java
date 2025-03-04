@@ -17,7 +17,7 @@ public class DivEQL extends BaseBinaryOperators {
      * the corresponding pattern, symbol, and priority for the division equal-to operation.
      */
     public DivEQL() {
-        super(0, Pattern.compile(PatternsUtils.DIVIDE_EQL), Utilities.DIVIDE_EQL, Utilities.MORE_1_PRIORITY);
+        super(0, Pattern.compile(PatternsUtils.DIVIDE_EQL), Utilities.DIVIDE_EQL, Utilities.MORE_4_PRIORITY);
     }
 
     /**

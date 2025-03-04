@@ -14,7 +14,7 @@ public class AddEQL extends BaseBinaryOperators {
      * sets the operator symbol to `+=`, and assigns a priority level of `MORE_1_PRIORITY`.
      */
     public AddEQL() {
-        super(0, Pattern.compile(PatternsUtils.PLUS_EQL), Utilities.PLUS_EQL, Utilities.MORE_1_PRIORITY);
+        super(0, Pattern.compile(PatternsUtils.PLUS_EQL), Utilities.PLUS_EQL, Utilities.MORE_4_PRIORITY);
     }
 
     /**

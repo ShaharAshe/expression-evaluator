@@ -21,7 +21,7 @@ public class SubEQL extends BaseBinaryOperators {
      * - A higher priority for the operator, indicating it should be processed after regular operators.
      */
     public SubEQL() {
-        super(0, Pattern.compile(PatternsUtils.MINUS_EQL), Utilities.MINUS_EQL, Utilities.MORE_1_PRIORITY);
+        super(0, Pattern.compile(PatternsUtils.MINUS_EQL), Utilities.MINUS_EQL, Utilities.MORE_4_PRIORITY);
     }
 
     /**
