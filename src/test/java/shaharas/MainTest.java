@@ -78,13 +78,14 @@ class MainTest {
     @AfterEach
     void tearDown() {
         try {
-            for (int i = 0; i <= 5; ++i){
+            Thread.sleep(1000);
             Files.walk(Path.of(OUTPUT_DIR))
                     .filter(Files::isRegularFile)
                     .forEach(file -> file.toFile().delete());
-            }
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
     }
 }

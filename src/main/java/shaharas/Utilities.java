@@ -19,13 +19,13 @@ final class Utilities {
     static final String OUTPUT = "-out";
 
     // Operator priorities
-    static final int NONE_PRIORITY = -1;
-    static final int REGULAR_PRIORITY = 0;
-    static final int MORE_1_PRIORITY = 1;
-    static final int MORE_2_PRIORITY = 2;
-    static final int MORE_3_PRIORITY = 3;
-    static final int MORE_4_PRIORITY = 4;
-    static final int TOP_PRIORITY = 5;
+    static final int NONE_PRIORITY = -1; // for = operator
+    static final int REGULAR_PRIORITY = 0; // for regular operators like plus/minus
+    static final int MORE_1_PRIORITY = 1; // for binary operators like multiply/divide
+    static final int MORE_2_PRIORITY = 2; // for unary operators like increment/decrement
+    static final int MORE_3_PRIORITY = 3; // for unary operators like power
+    static final int MORE_4_PRIORITY = 4; // for compound operators like +=, -=, *=, /= etc.
+    static final int TOP_PRIORITY = 5; // for parentheses
 
     // Basic operators
     static final String PLUS = "+";
